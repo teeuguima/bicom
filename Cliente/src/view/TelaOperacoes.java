@@ -249,27 +249,12 @@ public class TelaOperacoes extends javax.swing.JFrame implements Runnable {
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
         jListAzul.setToolTipText("");
-        jListAzul.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jListAzulMouseEntered(evt);
-            }
-        });
         jScrollPane2.setViewportView(jListAzul);
 
         jLabel4.setText("Latam");
 
-        jListLatam.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jListLatamMouseEntered(evt);
-            }
-        });
         jScrollPane3.setViewportView(jListLatam);
 
-        jListGol.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jListGolMouseEntered(evt);
-            }
-        });
         jScrollPane4.setViewportView(jListGol);
 
         jLabel5.setText("Azul");
@@ -475,37 +460,6 @@ public class TelaOperacoes extends javax.swing.JFrame implements Runnable {
 
 
     }//GEN-LAST:event_minhasPassagensActionPerfomed
-
-    private void jListAzulMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListAzulMouseEntered
-        try {
-            // TODO add your handling code here:
-            trechosDisponiveis();
-        } catch (RemoteException ex) {
-            Logger.getLogger(TelaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NotBoundException ex) {
-            Logger.getLogger(TelaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jListAzulMouseEntered
-
-    private void jListGolMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListGolMouseEntered
-        try {
-            trechosDisponiveis();
-        } catch (RemoteException ex) {
-            Logger.getLogger(TelaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NotBoundException ex) {
-            Logger.getLogger(TelaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jListGolMouseEntered
-
-    private void jListLatamMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListLatamMouseEntered
-        try {
-            trechosDisponiveis();
-        } catch (RemoteException ex) {
-            Logger.getLogger(TelaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NotBoundException ex) {
-            Logger.getLogger(TelaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jListLatamMouseEntered
     private boolean reservarTrechos(String companhia, String origem, String destino, String ida, String volta) throws RemoteException, NotBoundException {
         //Registry registryHost = LocateRegistry.getRegistry("172.16.103.5",5595);
         Registry registryHost = facade.getRegistry();
