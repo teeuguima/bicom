@@ -153,7 +153,6 @@ public class InterfaceImpl extends UnicastRemoteObject implements InterfaceAzul 
                 this.reservas.add(new Reserva(cpf, new Trecho(trecho.getNome(), ida, volta, trecho.getPreco())));
                 return true;
             } else {
-
                 return false;
             }
         }
@@ -211,12 +210,14 @@ public class InterfaceImpl extends UnicastRemoteObject implements InterfaceAzul 
         while (iterReservas.hasNext()) {
             Reserva reserva = (Reserva) iterReservas.next();
             if (reserva.getCpf().compareTo(cpf) == 0) {
-
                 if (reserva.getTrecho().getDataIda().compareTo(dataIda) == 0
                         && reserva.getTrecho().getDataVolta().compareTo(dataVolta) == 0) {
                     return true;
 
-                }
+            }
+            }else if(!reserva.getCpf().equals(cpf) && reserva.getTrecho().getDataIda().compareTo(dataIda)==0
+             && reserva.getTrecho().getDataVolta().compareTo(dataVolta)==0){
+                return false;
             }
         }
         return false;
