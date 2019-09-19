@@ -247,6 +247,11 @@ public class TelaOperacoes extends javax.swing.JFrame implements Runnable {
         );
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jScrollPane1MouseReleased(evt);
+            }
+        });
 
         jListAzul.setToolTipText("");
         jScrollPane2.setViewportView(jListAzul);
@@ -358,8 +363,9 @@ public class TelaOperacoes extends javax.swing.JFrame implements Runnable {
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         try {
-            Registry registryHost = LocateRegistry.getRegistry(5595);
-            //Registry registryHost = LocateRegistry.getRegistry("172.16.103.11",5595);
+            Registry registryHost = facade.getRegistry();
+            //Registry registryHost = LocateRegistry.getRegistry("172.16.103.5",5595);
+            //Registry registryHost = LocateRegistry.getRegistry(5595);
             InterfaceHostAirlines serverHost = (InterfaceHostAirlines) registryHost.lookup("OperacoesHost");
             System.out.println(this.jTextFieldOrigem1.getText());
             System.out.println(this.jTextFieldDestino1.getText());
@@ -378,7 +384,7 @@ public class TelaOperacoes extends javax.swing.JFrame implements Runnable {
         if (jListAzul.getSelectedValue() != null) {
             String passagemAzul = jListAzul.getSelectedValue();
             String[] info = passagemAzul.split(" : ");
-
+            System.out.println(info[1]);
             String origem = info[1].substring(9);
             String destino = info[2].substring(10);
             String ida = info[5];
@@ -390,24 +396,21 @@ public class TelaOperacoes extends javax.swing.JFrame implements Runnable {
                 } else {
                     JOptionPane.showMessageDialog(this, "Não foi possível realizar a sua reserva, tente novamente!", "Confirmação", JOptionPane.ERROR_MESSAGE);
                 }
-                
-
-                trechosDisponiveis();
-
             } catch (RemoteException | NotBoundException ex) {
                 Logger.getLogger(TelaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         if (this.jListGol.getSelectedValue() != null) {
             String[] info = jListGol.getSelectedValue().split(" : ");
-
+            System.out.println(info[1]);
             String origem = info[1].substring(9);
             String destino = info[2].substring(10);
             String ida = info[5];
             String volta = info[7];
-
+            System.out.println("Pediu");
             try {
                 if (reservarTrechos("Gol Airlines", origem, destino, ida, volta)) {
+                    System.out.println("Foi");
                     JOptionPane.showMessageDialog(this, "Reserva realizada com sucesso na Gol Airlines", "Confirmação", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(this, "Não foi possível realizar a sua reserva, tente novamente!", "Confirmação", JOptionPane.ERROR_MESSAGE);
@@ -418,7 +421,7 @@ public class TelaOperacoes extends javax.swing.JFrame implements Runnable {
         }
         if (this.jListLatam.getSelectedValue() != null) {
             String[] info = jListLatam.getSelectedValue().split(" : ");
-
+            System.out.println("Pediu");
             String origem = info[1].substring(9);
             String destino = info[2].substring(10);
             String ida = info[5];
@@ -426,6 +429,7 @@ public class TelaOperacoes extends javax.swing.JFrame implements Runnable {
 
             try {
                 if (reservarTrechos("Latam Airlines", origem, destino, ida, volta)) {
+                    System.out.println("Foi");
                     JOptionPane.showMessageDialog(this, "Reserva realizada com sucesso na Latam Airlines", "Confirmação", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(this, "Não foi possível realizar a sua reserva, tente novamente!", "Confirmação", JOptionPane.ERROR_MESSAGE);
@@ -435,7 +439,11 @@ public class TelaOperacoes extends javax.swing.JFrame implements Runnable {
             }
         }
         
-
+        try {
+            trechosDisponiveis();
+        } catch (RemoteException | NotBoundException ex) {
+            Logger.getLogger(TelaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButtonReservarActionPerformed
 
     private void minhasPassagensActionPerfomed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minhasPassagensActionPerfomed
@@ -457,13 +465,23 @@ public class TelaOperacoes extends javax.swing.JFrame implements Runnable {
 
 
     }//GEN-LAST:event_minhasPassagensActionPerfomed
+
+    private void jScrollPane1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseReleased
+        try {
+            trechosDisponiveis();
+        } catch (RemoteException ex) {
+            Logger.getLogger(TelaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotBoundException ex) {
+            Logger.getLogger(TelaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jScrollPane1MouseReleased
     private boolean reservarTrechos(String companhia, String origem, String destino, String ida, String volta) throws RemoteException, NotBoundException {
-        Registry registryHost = LocateRegistry.getRegistry(5595);
-        //Registry registryHost = LocateRegistry.getRegistry("172.16.103.11",5595);
+        //Registry registryHost = LocateRegistry.getRegistry("172.16.103.5",5595);
+        Registry registryHost = facade.getRegistry();
         InterfaceHostAirlines serverHost = (InterfaceHostAirlines) registryHost.lookup("OperacoesHost");
 
-        return serverHost.reservarTrecho("01212", companhia, origem, destino, ida, volta);
         //return serverHost.reservarTrecho(facade.getCpf(), companhia, origem, destino, ida, volta);
+        return serverHost.reservarTrecho("01212", companhia, origem, destino, ida, volta);
 
         //serverHost.
     }
@@ -476,8 +494,8 @@ public class TelaOperacoes extends javax.swing.JFrame implements Runnable {
         String[] dtasIdas;
         String[] dtasVoltas;
 
-        Registry registryHost = LocateRegistry.getRegistry(5595);
-        //Registry registryHost = LocateRegistry.getRegistry("172.16.103.11", 5595);
+        //Registry registryHost = LocateRegistry.getRegistry("172.16.103.5",5595);
+        Registry registryHost = facade.getRegistry();
         InterfaceHostAirlines serverHost = (InterfaceHostAirlines) registryHost.lookup("OperacoesHost");
 
         Iterator trechosAzul = serverHost.getTrechosAzul().iterator();
@@ -543,14 +561,14 @@ public class TelaOperacoes extends javax.swing.JFrame implements Runnable {
             while (datasIdas.hasNext()) {
                 String ida = (String) datasIdas.next();
                 dtasIdas[i] = ida;
-                System.out.println(dtasIdas[i]);
+                //System.out.println(dtasIdas[i]);
                 i++;
             }
             while (datasVoltas.hasNext()) {
                 String volta = (String) datasVoltas.next();
                 dtasVoltas[j] = volta;
                 listLatam.addElement(latam.toString() + " : " + "Ida =" + " : " + dtasIdas[j] + " : " + "Volta =" + " : " + dtasVoltas[j]);
-                System.out.println(dtasVoltas[j]);
+                //System.out.println(dtasVoltas[j]);
                 j++;
             }
         }
@@ -623,7 +641,7 @@ public class TelaOperacoes extends javax.swing.JFrame implements Runnable {
         this.jLayeredPane1.setOpaque(true);
         this.jLayeredPane3.setOpaque(true);
         
-        this.jLabel9.setText(facade.getNomeCompleto());
+        //this.jLabel9.setText(facade.getNomeCompleto());
 
     }
 
@@ -657,9 +675,9 @@ public class TelaOperacoes extends javax.swing.JFrame implements Runnable {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                TelaOperacoes telaOpera = new TelaOperacoes();
-                telaOpera.changeColor();
                 try {
+                    TelaOperacoes telaOpera = new TelaOperacoes();
+                    telaOpera.changeColor();
                     telaOpera.trechosDisponiveis();
                     telaOpera.setVisible(true);
 

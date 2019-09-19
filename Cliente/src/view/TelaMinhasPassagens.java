@@ -201,7 +201,7 @@ public class TelaMinhasPassagens extends javax.swing.JFrame implements Runnable 
     }
 
     public void minhasPassagens() throws RemoteException, NotBoundException {
-        Registry registryHost = LocateRegistry.getRegistry(5595);
+        Registry registryHost = LocateRegistry.getRegistry("172.16.103.5",5595);
         //Registry registryHost = LocateRegistry.getRegistry("172.16.103.11",5595);
         InterfaceHostAirlines serverHost = (InterfaceHostAirlines) registryHost.lookup("OperacoesHost");
 

@@ -25,12 +25,12 @@ public class Facade {
 
     private ControladorDeDados dados;
     private Perfil perfil;
-    Registry registryHost;
+    final Registry registryHost;
     //Registry registryHost = LocateRegistry.getRegistry("172.16.103.11",5595);
     InterfaceHostAirlines serverHost;
 
     public Facade() throws IOException, FileNotFoundException, ClassNotFoundException, RemoteException, NotBoundException {
-        this.registryHost = LocateRegistry.getRegistry(5595);
+        this.registryHost = LocateRegistry.getRegistry("172.16.103.5",5595);
         this.serverHost = (InterfaceHostAirlines) registryHost.lookup("OperacoesHost");
 
     }
@@ -43,6 +43,10 @@ public class Facade {
 
     public String getCpf() {
         return this.perfil.getCpf();
+    }
+    
+    public Registry getRegistry(){
+        return this.registryHost;
     }
 
     public String getNomeCompleto() {
