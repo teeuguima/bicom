@@ -55,7 +55,7 @@ public class Servidor {
         datasSPSSAVolta.add("08/10/2019");
         datasSPSSAVolta.add("09/10/2019");
         
-        server.cadastrarTrechos("São Paulo", "Salvador", 0, 2, "SaoPaulo-Salvador", 2, datasSPSSAIda, datasSPSSAVolta,40, 576.40);
+        server.cadastrarTrechos("São Paulo", "Salvador", 0, 2, "SãoPaulo-Salvador", 2, datasSPSSAIda, datasSPSSAVolta,40, 576.40);
         
         ArrayList<String> datasSSASPIda = new ArrayList<>();
         ArrayList<String> datasSSASPVolta = new ArrayList<>();
@@ -165,12 +165,12 @@ public class Servidor {
     public void buscarTrecho(InterfaceAzul server) throws RemoteException{
         Trecho trechoA = server.buscarTrecho("Rio de Janeiro", "Salvador");
         if(trechoA != null){
-            System.out.println(trechoA.getNome() + trechoA.getId() + trechoA.getPreco() + trechoA.getQuantidade());
+          //  System.out.println(trechoA.getNome() + trechoA.getId() + trechoA.getPreco() + trechoA.getQuantidade());
         }
         
         Trecho trechoB = server.buscarTrecho("São Paulo", "Porto Alegre");
         if(trechoB != null){
-            System.out.println(trechoB.getNome() + trechoB.getId() + trechoB.getPreco() + trechoB.getQuantidade());
+           // System.out.println(trechoB.getNome() + trechoB.getId() + trechoB.getPreco() + trechoB.getQuantidade());
         }
     }
         

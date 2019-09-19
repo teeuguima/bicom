@@ -8,6 +8,7 @@ package interfaces;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import model.Reserva;
 import model.Trecho;
 
 /**
@@ -21,6 +22,8 @@ public interface InterfaceAzul extends Remote {
     public void editarTrechos(int id, String origem, String destino, ArrayList<String> ida, ArrayList<String> volta, double preco) throws RemoteException;
 
     public void removerTrechos(int id) throws RemoteException;
+    
+    public ArrayList<Reserva> buscarReservas(String cpf) throws RemoteException;
     
     public boolean reservarTrecho(String origem, String destino, String cpf, String ida, String volta) throws RemoteException;
     

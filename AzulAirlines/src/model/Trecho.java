@@ -111,30 +111,30 @@ public class Trecho implements Serializable {
         this.volta = voltas;
     }
 
-    public String getIda(String ida) {
+    public boolean hasIda(String ida) {
         Iterator iterIdas = this.ida.iterator();
         while (iterIdas.hasNext()) {
             String data = (String) iterIdas.next();
             if (data.compareTo(ida) == 0) {
-                return data;
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     public void setIda(ArrayList<String> ida) {
         this.ida = ida;
     }
 
-    public String getVolta(String volta) {
+    public boolean hasVolta(String volta) {
         Iterator iterVoltas = this.volta.iterator();
         while (iterVoltas.hasNext()) {
             String data = (String) iterVoltas.next();
             if (data.compareTo(volta) == 0) {
-                return data;
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     public void setVolta(ArrayList<String> volta) {
@@ -173,24 +173,20 @@ public class Trecho implements Serializable {
         this.companhia = companhia;
     }
     
-    public void removerDataIda(String ida){
+    public synchronized void removerDataIda(String ida){
+        this.ida.remove(ida);
+        /*
         Iterator iterIdas = this.ida.iterator();
         while (iterIdas.hasNext()) {
             String data = (String) iterIdas.next();
             if (data.compareTo(ida) == 0) {
                     this.ida.remove(data);
             }
-        }
+        }*/
     }
     
-    public void removerDataVolta(String volta){
-        Iterator iterVoltas = this.volta.iterator();
-        while (iterVoltas.hasNext()) {
-            String data = (String) iterVoltas.next();
-            if (data.compareTo(volta) == 0) {
-                this.volta.remove(data);
-            }
-        }
+    public synchronized void removerDataVolta(String volta){
+        this.volta.remove(volta);
     }
 
     @Override
