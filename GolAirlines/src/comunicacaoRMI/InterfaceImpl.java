@@ -156,7 +156,10 @@ public class InterfaceImpl extends UnicastRemoteObject implements InterfaceGol {
                         && reserva.getTrecho().getDataVolta().compareTo(dataVolta) == 0) {
                     return true;
 
-                }
+            }
+            }else if(!reserva.getCpf().equals(cpf) && reserva.getTrecho().getDataIda().compareTo(dataIda)==0
+             && reserva.getTrecho().getDataVolta().compareTo(dataVolta)==0){
+                return false;
             }
         }
         return false;
