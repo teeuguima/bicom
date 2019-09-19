@@ -54,6 +54,7 @@ public class Servidor {
         datasCHFORVolta.add("07/10/2019");
         datasCHFORVolta.add("08/10/2019");
         datasCHFORVolta.add("09/10/2019");
+        datasCHFORVolta.add("10/10/2019");
 
         server.cadastrarTrechos("Chapecó", "Fortaleza", 6, 7, "Chapecó-Fortaleza", 2, datasCHFORIda, datasCHFORVolta, 40, 576.40);
 
@@ -80,7 +81,7 @@ public class Servidor {
         datasPBGOVolta.add("07/10/2019");
         datasPBGOVolta.add("08/10/2019");
         datasPBGOVolta.add("09/10/2019");
-
+        datasPBGOVolta.add("10/10/2019");
         server.cadastrarTrechos("Paraíba", "Goiania", 8, 10, "Paraíba-Goiania", 2, datasPBGOIda, datasPBGOVolta, 40, 668.00);
 
         ArrayList<String> datasCUBRAIda = new ArrayList<>();
@@ -106,7 +107,8 @@ public class Servidor {
         datasCUBRAVolta.add("07/10/2019");
         datasCUBRAVolta.add("08/10/2019");
         datasCUBRAVolta.add("09/10/2019");
-
+        datasCUBRAVolta.add("10/10/2019");
+        
         server.cadastrarTrechos("Curitiba", "Brasília", 11, 12, "Curitiba-Brasília", 90, datasCUBRAIda, datasCUBRAVolta, 40, 842.70);
 
         ArrayList<String> datasFORBRAIda = new ArrayList<>();
@@ -132,7 +134,7 @@ public class Servidor {
         datasFORBRAVolta.add("07/10/2019");
         datasFORBRAVolta.add("08/10/2019");
         datasFORBRAVolta.add("09/10/2019");
-
+        datasFORBRAVolta.add("10/10/2019");
         server.cadastrarTrechos("Fortaleza", "Brasília", 7, 12, "Fortaleza-Brasília", 90, datasFORBRAIda, datasFORBRAVolta, 40, 958.90);
     
         ArrayList<String> datasPBCURIda = new ArrayList<>();
@@ -158,7 +160,7 @@ public class Servidor {
         datasPBCURVolta.add("07/10/2019");
         datasPBCURVolta.add("08/10/2019");
         datasPBCURVolta.add("09/10/2019");
-
+        datasPBCURVolta.add("10/10/2019");
         server.cadastrarTrechos("Paraíba", "Curitiba", 8, 11, "Paraíba-Curitiba", 2, datasPBCURIda, datasPBCURVolta, 40, 576.40);
 
         ArrayList<String> datasCHGOIda = new ArrayList<>();
@@ -184,7 +186,7 @@ public class Servidor {
         datasCHGOVolta.add("07/10/2019");
         datasCHGOVolta.add("08/10/2019");
         datasCHGOVolta.add("09/10/2019");
-
+        datasCHGOVolta.add("10/10/2019");
         server.cadastrarTrechos("Chapecó", "Goiania", 6, 10, "Chapecó-Goiania", 2, datasCHGOIda, datasCHGOVolta, 40, 668.00);
 
         ArrayList<String> datasCURFORIda = new ArrayList<>();
@@ -210,7 +212,8 @@ public class Servidor {
         datasCURFORVolta.add("07/10/2019");
         datasCURFORVolta.add("08/10/2019");
         datasCURFORVolta.add("09/10/2019");
-
+        datasCURFORVolta.add("10/10/2019");
+        
         server.cadastrarTrechos("Curitiba", "Fortaleza", 7, 11, "Curitiba-Fortaleza", 90, datasCURFORIda, datasCURFORVolta, 40, 842.70);
         ArrayList<String> datasSPRJIda = new ArrayList<>();
         ArrayList<String> datasSPRJVolta = new ArrayList<>();
@@ -226,17 +229,17 @@ public class Servidor {
         datasSPRJIda.add("28/09/2019");
         datasSPRJIda.add("29/09/2019");
 
-        datasCURFORVolta.add("01/10/2019");
-        datasCURFORVolta.add("02/10/2019");
-        datasCURFORVolta.add("03/10/2019");
-        datasCURFORVolta.add("04/10/2019");
-        datasCURFORVolta.add("05/10/2019");
-        datasCURFORVolta.add("06/10/2019");
-        datasCURFORVolta.add("07/10/2019");
-        datasCURFORVolta.add("08/10/2019");
-        datasCURFORVolta.add("09/10/2019");
-        
-        server.cadastrarTrechos("São Paulo", "Rio de Janeiro", 0, 1, "SãoPaulo-RioDeJaneiro", 110, datasCHGOIda, datasCHGOVolta, 80, 755.00);
+        datasSPRJVolta.add("01/10/2019");
+        datasSPRJVolta.add("02/10/2019");
+        datasSPRJVolta.add("03/10/2019");
+        datasSPRJVolta.add("04/10/2019");
+        datasSPRJVolta.add("05/10/2019");
+        datasSPRJVolta.add("06/10/2019");
+        datasSPRJVolta.add("07/10/2019");
+        datasSPRJVolta.add("08/10/2019");
+        datasSPRJVolta.add("09/10/2019");
+        datasSPRJVolta.add("10/10/2019");
+        server.cadastrarTrechos("São Paulo", "Rio de Janeiro", 0, 1, "SãoPaulo-RioDeJaneiro", 110, datasSPRJIda, datasSPRJVolta, 80, 755.00);
         /*
         ArrayList<String> datasRJSSAIda = new ArrayList<>();
         ArrayList<String> datasRJSSAVolta = new ArrayList<>();

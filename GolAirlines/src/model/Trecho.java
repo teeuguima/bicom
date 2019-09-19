@@ -157,23 +157,11 @@ public class Trecho implements Serializable {
     }
     
      public void removerDataIda(String ida){
-        Iterator iterIdas = this.ida.iterator();
-        while (iterIdas.hasNext()) {
-            String data = (String) iterIdas.next();
-            if (data.compareTo(ida) == 0) {
-                    this.ida.remove(data);
-            }
-        }
+        this.ida.remove(ida);
     }
     
     public void removerDataVolta(String volta){
-        Iterator iterVoltas = this.volta.iterator();
-        while (iterVoltas.hasNext()) {
-            String data = (String) iterVoltas.next();
-            if (data.compareTo(volta) == 0) {
-                this.volta.remove(data);
-            }
-        }
+        this.volta.remove(volta);
     }
 
     @Override
