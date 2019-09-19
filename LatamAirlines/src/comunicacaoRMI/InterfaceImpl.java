@@ -127,33 +127,37 @@ public class InterfaceImpl extends UnicastRemoteObject implements InterfaceLatam
             }
         }
     }
-    
-    public void alterarTrecho(Trecho t){
+
+    public void alterarTrecho(Trecho t) {
         this.trechos.removeEdge(buscarCidade(t.getOrigem()), buscarCidade(t.getDestino()));
-        this.trechos.addEdge(buscarCidade(t.getNome()),buscarCidade(t.getDestino()), t);
+        this.trechos.addEdge(buscarCidade(t.getOrigem()), buscarCidade(t.getDestino()), t);
     }
 
     @Override
     public boolean reservarTrecho(String companhia, String origem, String destino, String cpf, String ida, String volta) throws RemoteException {
         Trecho trecho = buscarTrecho(origem, destino);
         if (trecho.getIda(ida) != null && trecho.getVolta(volta) != null) {
-            if (!hasTrechoReservado(trecho)) {
+            if (!hasTrechoReservado(cpf,ida, volta)) {
                 trecho.removerDataIda(ida);
                 trecho.removerDataVolta(volta);
                 alterarTrecho(trecho);
-                this.reservas.add(new Reserva(cpf, new Trecho(trecho.getNome(), trecho.getDataIda(), trecho.getDataVolta(), trecho.getPreco())));
+                this.reservas.add(new Reserva(cpf, new Trecho(trecho.getNome(), ida, volta, trecho.getPreco())));
                 return true;
             }
         }
         return false;
     }
-    
-    public boolean hasTrechoReservado(Trecho trecho) {
+
+    public boolean hasTrechoReservado(String cpf, String dataIda, String dataVolta) {
         Iterator iterReservas = this.reservas.iterator();
         while (iterReservas.hasNext()) {
             Reserva reserva = (Reserva) iterReservas.next();
-            if (reserva.getTrecho().equals(trecho)) {
-                return true;
+            if (reserva.getCpf().compareTo(cpf) == 0) {
+                if (reserva.getTrecho().getDataIda().compareTo(dataIda) == 0
+                        && reserva.getTrecho().getDataVolta().compareTo(dataVolta) == 0) {
+                    return true;
+
+                }
             }
         }
         return false;
@@ -188,6 +192,20 @@ public class InterfaceImpl extends UnicastRemoteObject implements InterfaceLatam
         } else {
             return null;
         }
+    }
+
+    public ArrayList<Reserva> buscarReservas(String cpf) {
+        ArrayList<Reserva> reservasEncontradas = new ArrayList<>();
+
+        Iterator iterReser = this.reservas.iterator();
+        while (iterReser.hasNext()) {
+            Reserva r = (Reserva) iterReser.next();
+            if (r.getCpf().compareTo(cpf) == 0) {
+                reservasEncontradas.add(r);
+            }
+        }
+
+        return reservasEncontradas;
     }
 
     public boolean hasReserva(String cpf, String nomeTrecho) {

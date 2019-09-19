@@ -51,7 +51,8 @@ public class Servidor {
         datasRJCURVolta.add("07/10/2019");
         datasRJCURVolta.add("08/10/2019");
         datasRJCURVolta.add("09/10/2019");
-
+        datasRJCURVolta.add("10/10/2019");
+        
         server.cadastrarTrechos("Rio de Janeiro", "Curitiba", 0, 2, "RiodeJaneiro-Curitiba", 2, datasRJCURIda, datasRJCURVolta, 40, 576.40);
 /*
         ArrayList<String> datasRJBHIda = new ArrayList<>();
