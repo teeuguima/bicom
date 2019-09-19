@@ -89,7 +89,7 @@ public class Rota {
     public Trecho buscarTrecho(String companhia, String ida, String volta){
         Trecho t = buscarTrecho(companhia);
         this.trechos.remove(t);
-        t.removerDatas(ida, volta);
+        //t.removerDatas(ida, volta);
         this.trechos.add(t);
         return new Trecho(companhia, ida, volta, t.getPreco());
     }

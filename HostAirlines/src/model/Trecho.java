@@ -176,7 +176,7 @@ public class Trecho implements Serializable {
     public void setDataVolta(String dataVolta) {
         this.dataVolta = dataVolta;
     }
-    
+    /*
     public void removerDatas(String ida, String volta){
         Iterator iterIdas = this.ida.iterator();
         Iterator iterVoltas = this.volta.iterator();
@@ -196,7 +196,7 @@ public class Trecho implements Serializable {
         }
     }
     
-    
+    */
 
     @Override
     public String toString() {
