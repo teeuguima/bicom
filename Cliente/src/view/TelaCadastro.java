@@ -9,6 +9,8 @@ import facade.Facade;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,14 +27,10 @@ public class TelaCadastro extends javax.swing.JFrame {
     /**
      * Creates new form TelaCadastr
      */
-    public TelaCadastro() throws IOException, FileNotFoundException, ClassNotFoundException {
+    public TelaCadastro() throws IOException, FileNotFoundException, ClassNotFoundException, RemoteException, RemoteException, RemoteException, RemoteException, NotBoundException {
         initComponents();
+        this.facade = new Facade();
         //facade = Facade.getInstance();
-    }
-    
-    public TelaCadastro(Facade facade) throws IOException, FileNotFoundException, ClassNotFoundException {
-        initComponents();
-        this.facade = facade;
     }
 
     /**
@@ -44,7 +42,6 @@ public class TelaCadastro extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldNome = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -55,11 +52,14 @@ public class TelaCadastro extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jButtonEnviar = new javax.swing.JButton();
         jPasswordFieldSenha = new javax.swing.JPasswordField();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        jLayeredPane1.setBackground(new java.awt.Color(0, 124, 255));
+        jLayeredPane1.setOpaque(true);
+        jLabel7 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\matee\\Documents\\Material Digital\\Engenharia de Computação\\Semestre 19.1\\Mi Concorrência e Conectividades\\3º Problema\\Cliente\\shared-services-Seminar-in-Zurich-460x310.jpg")); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Cadastro");
@@ -81,6 +81,39 @@ public class TelaCadastro extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Montserrat ExtraBold", 0, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Bicom - Passagens Aéreas");
+
+        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\matee\\Documents\\NetBeansProjects\\bicom\\Cliente\\globe128.png")); // NOI18N
+
+        jLayeredPane1.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addContainerGap(83, Short.MAX_VALUE)
+                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(103, 103, 103))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(68, 68, 68))))
+        );
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addGap(72, 72, 72)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,9 +134,8 @@ public class TelaCadastro extends javax.swing.JFrame {
                             .addComponent(jButtonEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPasswordFieldSenha))
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,7 +146,7 @@ public class TelaCadastro extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(13, 13, 13)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldSobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -128,11 +160,8 @@ public class TelaCadastro extends javax.swing.JFrame {
                 .addComponent(jPasswordFieldSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonEnviar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(58, Short.MAX_VALUE))
+            .addComponent(jLayeredPane1)
         );
 
         pack();
@@ -145,8 +174,8 @@ public class TelaCadastro extends javax.swing.JFrame {
             if (facade.cadastrarPerfil(jTextFieldNome.getText(), jTextFieldSobrenome.getText(), jTextFieldCpf.getText(), new String(jPasswordFieldSenha.getPassword()))) {
                 JOptionPane.showMessageDialog(null, "Perfil cadastrado com sucesso! Faça o login para ter acesso ao sistema!", null, JOptionPane.INFORMATION_MESSAGE);
                 this.setVisible(false);
-                facade.salvarDados();
-                new TelaInicial(facade).setVisible(true);
+                //facade.salvarDados();
+                new TelaInicial().setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Perfil já cadastrado no sistema!", null, JOptionPane.WARNING_MESSAGE);
             }
@@ -155,11 +184,18 @@ public class TelaCadastro extends javax.swing.JFrame {
             Logger.getLogger(TelaCadastro.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(TelaCadastro.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException | NotBoundException ex) {
             Logger.getLogger(TelaCadastro.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_enviarActionPerformed
 
+    private void changeColor() {
+        //this.jLayeredPane1.setBackground(new java.awt.Color(0, 124, 255))
+        //this.jLayeredPane3.setBackground(new java.awt.Color(255, 255, 255));
+        this.jLayeredPane1.setOpaque(true);
+        
+
+    }
     /**
      * @param args the command line arguments
      */
@@ -191,11 +227,23 @@ public class TelaCadastro extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                try {
+                    TelaCadastro telaCadastro = new TelaCadastro();
+                    telaCadastro.changeColor();
+                    telaCadastro.setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(TelaCadastro.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(TelaCadastro.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NotBoundException ex) {
+                    Logger.getLogger(TelaCadastro.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
                 /*try {
                     new TelaCadastro().setVisible(true);
                 } catch (IOException | ClassNotFoundException e) {
                 }
-                */
+                 */
             }
         });
     }
@@ -208,6 +256,8 @@ public class TelaCadastro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPasswordField jPasswordFieldSenha;
     private javax.swing.JTextField jTextFieldCpf;
     private javax.swing.JTextField jTextFieldNome;

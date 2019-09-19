@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import interfaces.InterfaceHostAirlines;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -29,7 +30,7 @@ import model.Trecho;
  *
  * @author Teeu Guima
  */
-public class TelaOperacoes extends javax.swing.JFrame {
+public class TelaOperacoes extends javax.swing.JFrame implements Runnable {
 
     private Facade facade;
 
@@ -63,11 +64,9 @@ public class TelaOperacoes extends javax.swing.JFrame {
         jTextFieldDestino1 = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jTextFieldIda1 = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jTextFieldVolta = new javax.swing.JTextField();
         jButtonBuscar = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -100,10 +99,6 @@ public class TelaOperacoes extends javax.swing.JFrame {
 
         jLabel13.setText("Insira uma cidade de destino");
 
-        jLabel14.setText("Data de Ida");
-
-        jLabel9.setText("Data de Volta");
-
         jButtonBuscar.setText("Buscar");
         jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,55 +106,58 @@ public class TelaOperacoes extends javax.swing.JFrame {
             }
         });
 
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel15.setText("Cliente:");
+
+        jLabel9.setText("jLabel9");
+
         jLayeredPane2.setLayer(jLabel10, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jTextFieldOrigem1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jLabel11, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jTextFieldDestino1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jLabel12, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jLabel13, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(jLabel14, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(jTextFieldIda1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(jLabel9, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(jTextFieldVolta, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jButtonBuscar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jLabel15, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jLabel9, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
         jLayeredPane2.setLayout(jLayeredPane2Layout);
         jLayeredPane2Layout.setHorizontalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addContainerGap()
                 .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jLayeredPane2Layout.createSequentialGroup()
                         .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel12)
-                            .addComponent(jTextFieldOrigem1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                        .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel13)
-                            .addComponent(jTextFieldDestino1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel12)
+                                    .addComponent(jTextFieldOrigem1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jTextFieldDestino1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                                .addComponent(jButtonBuscar)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(22, 22, 22))
                     .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                        .addComponent(jButtonBuscar)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane2Layout.createSequentialGroup()
-                        .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                                .addComponent(jTextFieldIda1)
-                                .addGap(32, 32, 32)))
-                        .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel9)
-                            .addComponent(jTextFieldVolta, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                        .addComponent(jLabel15)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel9)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jLayeredPane2Layout.setVerticalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addContainerGap()
+                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel9))
+                .addGap(18, 18, 18)
                 .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jLayeredPane2Layout.createSequentialGroup()
                         .addComponent(jLabel11)
@@ -174,18 +172,8 @@ public class TelaOperacoes extends javax.swing.JFrame {
                     .addComponent(jLabel12)
                     .addComponent(jLabel13))
                 .addGap(18, 18, 18)
-                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                        .addComponent(jLabel14)
-                        .addGap(5, 5, 5)
-                        .addComponent(jTextFieldIda1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(5, 5, 5)
-                        .addComponent(jTextFieldVolta, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonBuscar)
-                .addContainerGap(331, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLayeredPane1.setBackground(new java.awt.Color(0, 52, 255));
@@ -328,7 +316,7 @@ public class TelaOperacoes extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setText("Faça sua reserva clicando nos bilhetes disponíveis, limite máximo de três rotas. ");
+        jLabel7.setText("Monte sua viagem, clicando na rota de sua origem e escolhendo a rota com o destino desejado. Limite máximo de três rotas!");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -357,7 +345,7 @@ public class TelaOperacoes extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLayeredPane2)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -370,7 +358,8 @@ public class TelaOperacoes extends javax.swing.JFrame {
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         try {
-            Registry registryHost = LocateRegistry.getRegistry("172.16.103.11",5595);
+            Registry registryHost = LocateRegistry.getRegistry(5595);
+            //Registry registryHost = LocateRegistry.getRegistry("172.16.103.11",5595);
             InterfaceHostAirlines serverHost = (InterfaceHostAirlines) registryHost.lookup("OperacoesHost");
             System.out.println(this.jTextFieldOrigem1.getText());
             System.out.println(this.jTextFieldDestino1.getText());
@@ -396,14 +385,18 @@ public class TelaOperacoes extends javax.swing.JFrame {
             String volta = info[7];
 
             try {
-                if(reservarTrechos("Azul Airlines", origem, destino, ida, volta)){
+                if (reservarTrechos("Azul Airlines", origem, destino, ida, volta)) {
                     JOptionPane.showMessageDialog(this, "Reserva realizada com sucesso na Azul Airlines", "Confirmação", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Não foi possível realizar a sua reserva, tente novamente!", "Confirmação", JOptionPane.ERROR_MESSAGE);
                 }
-                    
-               
+                
+
+                trechosDisponiveis();
+
             } catch (RemoteException | NotBoundException ex) {
                 Logger.getLogger(TelaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
-            } 
+            }
         }
         if (this.jListGol.getSelectedValue() != null) {
             String[] info = jListGol.getSelectedValue().split(" : ");
@@ -412,10 +405,13 @@ public class TelaOperacoes extends javax.swing.JFrame {
             String destino = info[2].substring(10);
             String ida = info[5];
             String volta = info[7];
-            
-            
+
             try {
-                reservarTrechos("Gol Airlines", origem, destino, ida, volta);
+                if (reservarTrechos("Gol Airlines", origem, destino, ida, volta)) {
+                    JOptionPane.showMessageDialog(this, "Reserva realizada com sucesso na Gol Airlines", "Confirmação", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Não foi possível realizar a sua reserva, tente novamente!", "Confirmação", JOptionPane.ERROR_MESSAGE);
+                }
             } catch (RemoteException | NotBoundException ex) {
                 Logger.getLogger(TelaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -427,32 +423,48 @@ public class TelaOperacoes extends javax.swing.JFrame {
             String destino = info[2].substring(10);
             String ida = info[5];
             String volta = info[7];
-            
-            
+
             try {
-                reservarTrechos("Latam Airlines", origem, destino, ida, volta);
+                if (reservarTrechos("Latam Airlines", origem, destino, ida, volta)) {
+                    JOptionPane.showMessageDialog(this, "Reserva realizada com sucesso na Latam Airlines", "Confirmação", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Não foi possível realizar a sua reserva, tente novamente!", "Confirmação", JOptionPane.ERROR_MESSAGE);
+                }
             } catch (RemoteException | NotBoundException ex) {
                 Logger.getLogger(TelaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
+        
 
     }//GEN-LAST:event_jButtonReservarActionPerformed
 
     private void minhasPassagensActionPerfomed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minhasPassagensActionPerfomed
         // TODO add your handling code here:
-        TelaMinhasPassagens minhasPassagens = new TelaMinhasPassagens();
-        minhasPassagens.setVisible(true);
+        TelaMinhasPassagens minhasPassagens;
+        try {
+            minhasPassagens = new TelaMinhasPassagens(this.facade);
+            
+            new Thread(minhasPassagens).start();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(TelaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TelaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotBoundException ex) {
+            Logger.getLogger(TelaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        
-        
+
+
     }//GEN-LAST:event_minhasPassagensActionPerfomed
     private boolean reservarTrechos(String companhia, String origem, String destino, String ida, String volta) throws RemoteException, NotBoundException {
-        Registry registryHost = LocateRegistry.getRegistry("172.16.103.11",5595);
+        Registry registryHost = LocateRegistry.getRegistry(5595);
+        //Registry registryHost = LocateRegistry.getRegistry("172.16.103.11",5595);
         InterfaceHostAirlines serverHost = (InterfaceHostAirlines) registryHost.lookup("OperacoesHost");
-        
-        return serverHost.reservarTrecho(facade.getCpf(), companhia, origem, destino, ida, volta);
-        
+
+        return serverHost.reservarTrecho("01212", companhia, origem, destino, ida, volta);
+        //return serverHost.reservarTrecho(facade.getCpf(), companhia, origem, destino, ida, volta);
+
         //serverHost.
     }
 
@@ -461,7 +473,11 @@ public class TelaOperacoes extends javax.swing.JFrame {
         DefaultListModel listGol = new DefaultListModel();
         DefaultListModel listLatam = new DefaultListModel();
 
-        Registry registryHost = LocateRegistry.getRegistry("172.16.103.11",5595);
+        String[] dtasIdas;
+        String[] dtasVoltas;
+
+        Registry registryHost = LocateRegistry.getRegistry(5595);
+        //Registry registryHost = LocateRegistry.getRegistry("172.16.103.11", 5595);
         InterfaceHostAirlines serverHost = (InterfaceHostAirlines) registryHost.lookup("OperacoesHost");
 
         Iterator trechosAzul = serverHost.getTrechosAzul().iterator();
@@ -469,44 +485,73 @@ public class TelaOperacoes extends javax.swing.JFrame {
         Iterator trechosLatam = serverHost.getTrechosLatam().iterator();
 
         while (trechosAzul.hasNext()) {
+            int i = 0;
+            int j = 0;
             Trecho azul = (Trecho) trechosAzul.next();
+            dtasIdas = new String[azul.getDatasIdas().size()];
+            dtasVoltas = new String[azul.getDatasVoltas().size()];
             Iterator datasIdas = azul.getDatasIdas().iterator();
             Iterator datasVoltas = azul.getDatasVoltas().iterator();
             while (datasIdas.hasNext()) {
                 String ida = (String) datasIdas.next();
-                while (datasVoltas.hasNext()) {
-                    String volta = (String) datasVoltas.next();
-                    listAzul.addElement(azul.toString() + " : " + "Ida =" + " : " + ida + " : " + "Volta =" + " : " + volta);
-                }
+                dtasIdas[i] = ida;
+                //System.out.println(dtasIdas[i]);
+                i++;
+            }
+            while (datasVoltas.hasNext()) {
+                String volta = (String) datasVoltas.next();
+                dtasVoltas[j] = volta;
+                listAzul.addElement(azul.toString() + " : " + "Ida =" + " : " + dtasIdas[j] + " : " + "Volta =" + " : " + dtasVoltas[j]);
+                //System.out.println(dtasVoltas[j]);
+                j++;
             }
         }
         this.jListAzul.setModel(listAzul);
         while (trechosGol.hasNext()) {
+            int i = 0;
+            int j = 0;
             Trecho gol = (Trecho) trechosGol.next();
+            dtasIdas = new String[gol.getDatasIdas().size()];
+            dtasVoltas = new String[gol.getDatasVoltas().size()];
             Iterator datasIdas = gol.getDatasIdas().iterator();
             Iterator datasVoltas = gol.getDatasVoltas().iterator();
-            String volta = null;
+
             while (datasIdas.hasNext()) {
                 String ida = (String) datasIdas.next();
-                while (datasVoltas.hasNext()) {
-                    volta = (String) datasVoltas.next();
-                    listGol.addElement(gol.toString() + " : " + "Ida =" + " : " + ida + " : " + "Volta =" + " : " + volta);
-
-                }
-                listGol.addElement(gol.toString() + " : " + "Ida =" + " : " + ida + " : " + "Volta =" + " : " + volta);
+                dtasIdas[i] = ida;
+                //System.out.println(dtasIdas[i]);
+                i++;
+            }
+            while (datasVoltas.hasNext()) {
+                String volta = (String) datasVoltas.next();
+                dtasVoltas[j] = volta;
+                listGol.addElement(gol.toString() + " : " + "Ida =" + " : " + dtasIdas[j] + " : " + "Volta =" + " : " + dtasVoltas[j]);
+                //System.out.println(dtasVoltas[j]);
+                j++;
             }
         }
         this.jListGol.setModel(listGol);
         while (trechosLatam.hasNext()) {
+            int i = 0;
+            int j = 0;
             Trecho latam = (Trecho) trechosLatam.next();
+            dtasIdas = new String[latam.getDatasIdas().size()];
+            dtasVoltas = new String[latam.getDatasVoltas().size()];
             Iterator datasIdas = latam.getDatasIdas().iterator();
             Iterator datasVoltas = latam.getDatasVoltas().iterator();
+
             while (datasIdas.hasNext()) {
                 String ida = (String) datasIdas.next();
-                while (datasVoltas.hasNext()) {
-                    String volta = (String) datasVoltas.next();
-                    listLatam.addElement(latam.toString() + " : " + "Ida =" + " : " + ida + " : " + "Volta =" + " : " + volta);
-                }
+                dtasIdas[i] = ida;
+                System.out.println(dtasIdas[i]);
+                i++;
+            }
+            while (datasVoltas.hasNext()) {
+                String volta = (String) datasVoltas.next();
+                dtasVoltas[j] = volta;
+                listLatam.addElement(latam.toString() + " : " + "Ida =" + " : " + dtasIdas[j] + " : " + "Volta =" + " : " + dtasVoltas[j]);
+                System.out.println(dtasVoltas[j]);
+                j++;
             }
         }
         this.jListLatam.setModel(listLatam);
@@ -566,10 +611,10 @@ public class TelaOperacoes extends javax.swing.JFrame {
 
         }
     }
-    
-    public void atualizarPassagens() throws InterruptedException, RemoteException, NotBoundException{
-          //  Thread.sleep(80000);
-            trechosDisponiveis();  
+
+    public void atualizarPassagens() throws InterruptedException, RemoteException, NotBoundException {
+        //  Thread.sleep(80000);
+        trechosDisponiveis();
     }
 
     private void changeColor() {
@@ -577,6 +622,8 @@ public class TelaOperacoes extends javax.swing.JFrame {
         this.jLayeredPane3.setBackground(new java.awt.Color(255, 255, 255));
         this.jLayeredPane1.setOpaque(true);
         this.jLayeredPane3.setOpaque(true);
+        
+        this.jLabel9.setText(facade.getNomeCompleto());
 
     }
 
@@ -615,14 +662,13 @@ public class TelaOperacoes extends javax.swing.JFrame {
                 try {
                     telaOpera.trechosDisponiveis();
                     telaOpera.setVisible(true);
-                    
+
                 } catch (RemoteException ex) {
                     Logger.getLogger(TelaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (NotBoundException ex) {
                     Logger.getLogger(TelaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
-                } 
-                    
-                
+                }
+
             }
         });
     }
@@ -635,7 +681,7 @@ public class TelaOperacoes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -656,8 +702,20 @@ public class TelaOperacoes extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextField jTextFieldDestino1;
-    private javax.swing.JTextField jTextFieldIda1;
     private javax.swing.JTextField jTextFieldOrigem1;
-    private javax.swing.JTextField jTextFieldVolta;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+        TelaOperacoes telaOpera = new TelaOperacoes(this.facade);
+        telaOpera.changeColor();
+        try {
+            telaOpera.trechosDisponiveis();
+            telaOpera.setVisible(true);
+
+        } catch (RemoteException | NotBoundException ex) {
+            Logger.getLogger(TelaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 }

@@ -36,6 +36,12 @@ public class Reserva implements Serializable {
     public void setTrecho(Trecho trecho) {
         this.trecho = trecho;
     }
+
+    @Override
+    public String toString() {
+        return "Reserva: "+ trecho.getNome() + " | "  /*+" Origem: "+ trecho.getOrigem()+ "Destino: "+ trecho.getDestino() +*/+
+                "Ida: " + trecho.getDataIda() + " | " +"Volta: " + trecho.getDataVolta();
+    }
     
     
     

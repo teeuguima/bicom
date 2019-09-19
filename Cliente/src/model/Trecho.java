@@ -115,6 +115,16 @@ public class Trecho implements Serializable {
         return null;
     }
 
+    public String getDataIda() {
+        return dataIda;
+    }
+
+    public void setDataIda(String dataIda) {
+        this.dataIda = dataIda;
+    }
+    
+    
+
     public void setIda(ArrayList<String> ida) {
         this.ida = ida;
     }
@@ -158,39 +168,12 @@ public class Trecho implements Serializable {
         this.preco = preco;
     }
 
-    public String getDataIda() {
-        return dataIda;
-    }
-
-    public void setDataIda(String dataIda) {
-        this.dataIda = dataIda;
-    }
-
     public String getDataVolta() {
         return dataVolta;
     }
 
     public void setDataVolta(String dataVolta) {
         this.dataVolta = dataVolta;
-    }
-
-    public void removerDatas(String ida, String volta) {
-        Iterator iterIdas = this.ida.iterator();
-        Iterator iterVoltas = this.volta.iterator();
-
-        while (iterIdas.hasNext()) {
-            String s = (String) iterIdas.next();
-            if (s.compareTo(ida) == 0) {
-                this.ida.remove(s);
-            }
-        }
-
-        while (iterVoltas.hasNext()) {
-            String s = (String) iterVoltas.next();
-            if (s.compareTo(volta) == 0) {
-                this.ida.remove(s);
-            }
-        }
     }
 
     @Override

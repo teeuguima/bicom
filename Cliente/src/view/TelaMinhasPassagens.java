@@ -5,15 +5,35 @@
  */
 package view;
 
+import facade.Facade;
+import interfaces.InterfaceHostAirlines;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import model.Reserva;
+
 /**
  *
  * @author Teeu Guima
  */
-public class TelaMinhasPassagens extends javax.swing.JFrame {
+public class TelaMinhasPassagens extends javax.swing.JFrame implements Runnable {
 
-    /**
-     * Creates new form TelaMinhasPassagens
-     */
+    private Facade facade;
+
+    public TelaMinhasPassagens(Facade facade) throws IOException, FileNotFoundException, ClassNotFoundException, RemoteException, NotBoundException {
+        initComponents();
+        //this.facade = new Facade();
+        this.facade = facade;
+    }
+
     public TelaMinhasPassagens() {
         initComponents();
     }
@@ -33,9 +53,16 @@ public class TelaMinhasPassagens extends javax.swing.JFrame {
         jLayeredPane2 = new javax.swing.JLayeredPane();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jListLatam = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jListAzul = new javax.swing.JList<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jListGol = new javax.swing.JList<>();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\matee\\Documents\\Material Digital\\Engenharia de Computação\\Semestre 19.1\\Mi Concorrência e Conectividades\\3º Problema\\Cliente\\globe.png")); // NOI18N
 
@@ -74,15 +101,28 @@ public class TelaMinhasPassagens extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel4.setText("Passagens compradas:");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(jListLatam);
+
+        jScrollPane2.setViewportView(jListAzul);
+
+        jScrollPane3.setViewportView(jListGol);
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setText("Azul Airlines");
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setText("Gol Airlines");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel6.setText("Latam Airlines");
 
         jLayeredPane2.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jScrollPane3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
         jLayeredPane2.setLayout(jLayeredPane2Layout);
@@ -93,18 +133,47 @@ public class TelaMinhasPassagens extends javax.swing.JFrame {
                 .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jLayeredPane2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
+                        .addGap(0, 508, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane3))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane2Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(295, 295, 295))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane2Layout.createSequentialGroup()
+                        .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(296, 296, 296))))
+            .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane2)
+                    .addContainerGap()))
         );
         jLayeredPane2Layout.setVerticalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(34, 34, 34)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                    .addGap(85, 85, 85)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(312, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -119,7 +188,8 @@ public class TelaMinhasPassagens extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLayeredPane2))
+                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -127,9 +197,43 @@ public class TelaMinhasPassagens extends javax.swing.JFrame {
     private void changeColor() {
         this.jLayeredPane1.setBackground(new java.awt.Color(0, 124, 255));
         this.jLayeredPane1.setOpaque(true);
-        
 
     }
+
+    public void minhasPassagens() throws RemoteException, NotBoundException {
+        Registry registryHost = LocateRegistry.getRegistry(5595);
+        //Registry registryHost = LocateRegistry.getRegistry("172.16.103.11",5595);
+        InterfaceHostAirlines serverHost = (InterfaceHostAirlines) registryHost.lookup("OperacoesHost");
+
+        DefaultListModel listAzul = new DefaultListModel();
+        DefaultListModel listGol = new DefaultListModel();
+        DefaultListModel listLatam = new DefaultListModel();
+
+        Iterator reservasAzul = serverHost.buscarReservas("Azul Airlines", facade.getCpf()).iterator();;
+        //Iterator reservasAzul = serverHost.buscarReservas("Azul Airlines", "01212").iterator();
+        Iterator reservasGol = serverHost.buscarReservas("Gol Airlines", facade.getCpf()).iterator();;
+        //Iterator reservasGol = serverHost.buscarReservas("Gol Airlines", "01212").iterator();
+        Iterator reservasLatam = serverHost.buscarReservas("Latam Airlines", facade.getCpf()).iterator();;
+        //Iterator reservasLatam = serverHost.buscarReservas("Latam Airlines", "01212").iterator();
+
+        while (reservasAzul.hasNext()) {
+            Reserva r = (Reserva) reservasAzul.next();
+            listAzul.addElement(r.toString());
+        }
+        jListAzul.setModel(listAzul);
+        while (reservasGol.hasNext()) {
+            Reserva r = (Reserva) reservasGol.next();
+            listGol.addElement(r.toString());
+        }
+        jListGol.setModel(listGol);
+        while (reservasLatam.hasNext()) {
+            Reserva r = (Reserva) reservasLatam.next();
+            listLatam.addElement(r.toString());
+        }
+        jListLatam.setModel(listLatam);
+
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -160,9 +264,11 @@ public class TelaMinhasPassagens extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+
                 TelaMinhasPassagens telaMinha = new TelaMinhasPassagens();
                 telaMinha.changeColor();
                 telaMinha.setVisible(true);
+
             }
         });
     }
@@ -170,10 +276,32 @@ public class TelaMinhasPassagens extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane jLayeredPane2;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JList<String> jListAzul;
+    private javax.swing.JList<String> jListGol;
+    private javax.swing.JList<String> jListLatam;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+
+        TelaMinhasPassagens telaMinha;
+        try {
+            telaMinha = new TelaMinhasPassagens(this.facade);
+            telaMinha.changeColor();
+            telaMinha.minhasPassagens();
+            telaMinha.setVisible(true);
+        } catch (IOException | ClassNotFoundException | NotBoundException ex) {
+            Logger.getLogger(TelaMinhasPassagens.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 }

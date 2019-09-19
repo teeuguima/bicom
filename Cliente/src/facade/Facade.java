@@ -6,9 +6,14 @@
 package facade;
 
 import controladores.ControladorDeDados;
+import interfaces.InterfaceHostAirlines;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.security.NoSuchAlgorithmException;
 import model.Perfil;
 
@@ -17,33 +22,38 @@ import model.Perfil;
  * @author Teeu Guima
  */
 public class Facade {
+
     private ControladorDeDados dados;
-    private static Facade facade;
-    
-    
-    public Facade() throws IOException, FileNotFoundException, ClassNotFoundException{
-        this.dados = new ControladorDeDados();
+    private Perfil perfil;
+    Registry registryHost;
+    //Registry registryHost = LocateRegistry.getRegistry("172.16.103.11",5595);
+    InterfaceHostAirlines serverHost;
+
+    public Facade() throws IOException, FileNotFoundException, ClassNotFoundException, RemoteException, NotBoundException {
+        this.registryHost = LocateRegistry.getRegistry(5595);
+        this.serverHost = (InterfaceHostAirlines) registryHost.lookup("OperacoesHost");
+
     }
-    
-    public static synchronized Facade getInstance() throws IOException, FileNotFoundException, ClassNotFoundException {
-        return (facade == null) ? facade = new Facade() : facade;
+
+    public boolean cadastrarPerfil(String nome, String sobrenome, String cpf, String senha) throws NoSuchAlgorithmException, UnsupportedEncodingException, IOException {
+        return this.serverHost.cadastrarPerfil(nome, sobrenome, cpf, senha);
+        //return this.dados.cadastrarPerfil(new Perfil(nome, sobrenome,cpf, dados.cadastrarSenha(senha)));
+
     }
-    
-    public boolean cadastrarPerfil(String nome, String sobrenome, String cpf, String senha) throws NoSuchAlgorithmException, UnsupportedEncodingException, IOException{
-        
-        return this.dados.cadastrarPerfil(new Perfil(nome, sobrenome,cpf, dados.cadastrarSenha(senha)));
-   
+
+    public String getCpf() {
+        return this.perfil.getCpf();
     }
-    
-    public String getCpf(){
-        return this.dados.getCpf();
+
+    public String getNomeCompleto() {
+        return this.perfil.getNome() + " " + this.perfil.getSobrenome();
     }
-    
-    public boolean realizarLogin(String cpf, String senha) throws NoSuchAlgorithmException, UnsupportedEncodingException, IOException, FileNotFoundException, ClassNotFoundException{
-     
-        return this.dados.realizarLogin(cpf, senha);
+
+    public boolean realizarLogin(String cpf, String senha) throws NoSuchAlgorithmException, UnsupportedEncodingException, IOException, FileNotFoundException, ClassNotFoundException {
+        this.perfil = this.serverHost.realizarLogin(cpf, senha);
+        return this.perfil != null;
     }
-  
+    /*
     public void salvarDados() throws IOException{
         this.dados.salvandoDados();
     }
@@ -55,6 +65,6 @@ public class Facade {
     public void criarArquivo() throws IOException, FileNotFoundException, ClassNotFoundException{
         this.dados.criandoArquivos();
     }
- 
-     
+     */
+
 }
