@@ -11,17 +11,14 @@ import java.util.ArrayList;
 import model.Reserva;
 import model.Trecho;
 
-/**
+/** Interface que define os serviços prestados 
+ * no servidor da companhia aérea.
  *
- * @author Teeu Guima
+ * @author Mateus Guimarães
  */
 public interface InterfaceAzul extends Remote {
     
     public void cadastrarTrechos(String origem, String destino, int idOrigem, int idDestino, String nomeTrecho, int tempoVoo, ArrayList<String> ida, ArrayList<String> volta, int quantidade, double preco) throws RemoteException;
-    
-    public void editarTrechos(int id, String origem, String destino, ArrayList<String> ida, ArrayList<String> volta, double preco) throws RemoteException;
-
-    public void removerTrechos(int id) throws RemoteException;
     
     public ArrayList<Reserva> buscarReservas(String cpf) throws RemoteException;
     
@@ -30,8 +27,6 @@ public interface InterfaceAzul extends Remote {
     public void cadastrarCidade(int id, String nome, String aeroporto) throws RemoteException;
     
     public Trecho buscarTrecho(String origem, String destino) throws RemoteException;
-    
-    public ArrayList<String> listarTrechos() throws RemoteException;
     
     public ArrayList<Trecho> getTrechos() throws RemoteException;
     

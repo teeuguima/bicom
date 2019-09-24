@@ -15,12 +15,18 @@ import model.Trecho;
 import interfaces.InterfaceAzul;
 
 
-/**
- *
- * @author Teeu Guima
+/**Classe principal, inicializa o servidor
+ * e cadastra automaticamente as cidades
+ * e trechos que a companhia opera.
+ * 
+ * @author Mateus Guimarães.
  */
 public class Servidor {
-    
+    /**Método que realiza cadastro das cidades.
+     * 
+     * @param server
+     * @throws RemoteException 
+     */
     public void cadastrarCidades(InterfaceAzul server) throws RemoteException{
         server.cadastrarCidade(0, "São Paulo", "Congonhas");
         server.cadastrarCidade(1, "Rio de Janeiro", "Galeão");
@@ -29,7 +35,11 @@ public class Servidor {
         server.cadastrarCidade(4, "Porto Alegre", "Salgado Filho");
         server.cadastrarCidade(5, "Recife", "Gilberto Freyre");
     }
-        
+    /**Método que cadastra trechos entre as cidades.
+     * 
+     * @param server
+     * @throws RemoteException 
+     */    
     public void cadastrarTrechos(InterfaceAzul server) throws RemoteException{
         ArrayList<String> datasSPSSAIda = new ArrayList<>();
         ArrayList<String> datasSPSSAVolta = new ArrayList<>();
@@ -162,17 +172,6 @@ public class Servidor {
         server.cadastrarTrechos("Rio de Janeiro", "Salvador", 1, 3, "RioDeJaneiro-Salvador", 90, datasRJSSAIda, datasRJSSAVolta,40, 958.90);
     }   
     
-    public void buscarTrecho(InterfaceAzul server) throws RemoteException{
-        Trecho trechoA = server.buscarTrecho("Rio de Janeiro", "Salvador");
-        if(trechoA != null){
-          //  System.out.println(trechoA.getNome() + trechoA.getId() + trechoA.getPreco() + trechoA.getQuantidade());
-        }
-        
-        Trecho trechoB = server.buscarTrecho("São Paulo", "Porto Alegre");
-        if(trechoB != null){
-           // System.out.println(trechoB.getNome() + trechoB.getId() + trechoB.getPreco() + trechoB.getQuantidade());
-        }
-    }
         
     /**
      * @param args the command line arguments
@@ -189,8 +188,6 @@ public class Servidor {
             InterfaceAzul server = (InterfaceAzul) registry.lookup("AzulServices");
             servidor.cadastrarCidades(server);
             servidor.cadastrarTrechos(server);
-            
-            servidor.buscarTrecho(server);
             
             
             System.out.println("Servidor Inicializado!");

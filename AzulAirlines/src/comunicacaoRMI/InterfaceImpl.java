@@ -18,8 +18,10 @@ import org.jgrapht.graph.*;
 import interfaces.InterfaceAzul;
 
 /**
+ * Classe que implementa a interface que define os métodos necessários para
+ * prestação de serviços da Azul Airlines.
  *
- * @author Teeu Guima
+ * @author Mateus Guimarães
  */
 public class InterfaceImpl extends UnicastRemoteObject implements InterfaceAzul {
 
@@ -38,6 +40,12 @@ public class InterfaceImpl extends UnicastRemoteObject implements InterfaceAzul 
 
     }
 
+    /**
+     * Método para conferir se há uma cidade já cadastrada!
+     *
+     * @param idLocal
+     * @return booleano
+     */
     private boolean hasCidade(int idLocal) {
         Iterator iterCidades = cidades.iterator();
         if (iterCidades.hasNext()) {
@@ -49,17 +57,15 @@ public class InterfaceImpl extends UnicastRemoteObject implements InterfaceAzul 
         return false;
     }
 
-    private Cidade buscarCidade(int idLocal) {
-        Iterator iterCidades = cidades.iterator();
-        if (iterCidades.hasNext()) {
-            Cidade cidade = (Cidade) iterCidades.next();
-            if (cidade.getCodigoDoLocal() == idLocal) {
-                return cidade;
-            }
-        }
-        return null;
-    }
-
+    /**
+     * Método para cadastrar uma respectiva cidade e inseri-lá na estrutura de
+     * grafo!
+     *
+     * @param id
+     * @param nome
+     * @param aeroporto
+     * @throws RemoteException
+     */
     @Override
     public void cadastrarCidade(int id, String nome, String aeroporto) throws RemoteException {
         System.out.println(nome);
@@ -70,6 +76,22 @@ public class InterfaceImpl extends UnicastRemoteObject implements InterfaceAzul 
 
     }
 
+    /**
+     * Método que insere um trecho (aresta) no grafo entre duas cidades
+     * (vértices) definindo informações sobre ponto de origem e destino.
+     *
+     * @param origem
+     * @param destino
+     * @param idOrigem
+     * @param idDestino
+     * @param nomeTrecho
+     * @param tempoVoo
+     * @param ida
+     * @param volta
+     * @param quantidade
+     * @param preco
+     * @throws RemoteException
+     */
     @Override
     public void cadastrarTrechos(String origem, String destino, int idOrigem, int idDestino, String nomeTrecho, int tempoVoo, ArrayList<String> ida, ArrayList<String> volta, int quantidade, double preco) throws RemoteException {
         Cidade cdorigem = buscarCidade(origem);
@@ -89,6 +111,12 @@ public class InterfaceImpl extends UnicastRemoteObject implements InterfaceAzul 
 
     }
 
+    /**
+     * Método para buscar cidade pelo nome
+     *
+     * @param nome
+     * @return Object Cidade ou null
+     */
     private Cidade buscarCidade(String nome) {
         Iterator iterCidades = cidades.iterator();
         while (iterCidades.hasNext()) {
@@ -100,31 +128,13 @@ public class InterfaceImpl extends UnicastRemoteObject implements InterfaceAzul 
         return null;
     }
 
-    @Override
-    public void editarTrechos(int id, String origem, String destino, ArrayList<String> ida, ArrayList<String> volta, double preco) throws RemoteException {
-        Iterator iterTrechos = trechosAzul.iterator();
-        while (iterTrechos.hasNext()) {
-            Trecho trechos = (Trecho) iterTrechos.next();
-            if (trechos.getId() == id) {
-                trechos.setOrigem(origem);
-                trechos.setIda(ida);
-                trechos.setVolta(volta);
-                trechos.setPreco(preco);
-            }
-        }
-    }
-
-    @Override
-    public void removerTrechos(int id) throws RemoteException {
-        Iterator iterTrechos = trechosAzul.iterator();
-        while (iterTrechos.hasNext()) {
-            Trecho trechos = (Trecho) iterTrechos.next();
-            if (trechos.getId() == id) {
-                this.trechosAzul.remove(trechos);
-            }
-        }
-    }
-
+    /**
+     * Método para remover uma passagem pelo data de ida e volta do vôo.
+     *
+     * @param id
+     * @param dataIda
+     * @param dataVolta
+     */
     public void removerPassagem(int id, String dataIda, String dataVolta) {
         Iterator iterTrechos = trechosAzul.iterator();
         while (iterTrechos.hasNext()) {
@@ -135,11 +145,29 @@ public class InterfaceImpl extends UnicastRemoteObject implements InterfaceAzul 
         }
     }
 
+    /**
+     * Método para modificar o trecho de uma rota, removendo as informações
+     * antigas e substituindo pelas novas.
+     *
+     * @param t
+     */
     public void alterarTrecho(Trecho t) {
         this.trechos.removeEdge(buscarCidade(t.getOrigem()), buscarCidade(t.getDestino()));
         this.trechos.addEdge(buscarCidade(t.getOrigem()), buscarCidade(t.getDestino()), t);
     }
 
+    /**
+     * Método realiza a reserva de um trecho a partir da data de ida e escolha,
+     * identificando a reserva pelo cpf do comprador.
+     *
+     * @param origem
+     * @param destino
+     * @param cpf
+     * @param ida
+     * @param volta
+     * @return booleano
+     * @throws RemoteException
+     */
     @Override
     public synchronized boolean reservarTrecho(String origem, String destino, String cpf, String ida, String volta) throws RemoteException {
         Trecho trecho = buscarTrecho(origem, destino);
@@ -159,6 +187,12 @@ public class InterfaceImpl extends UnicastRemoteObject implements InterfaceAzul 
         return false;
     }
 
+    /**
+     * Método verifica a existência de um trecho e retorna verdadeiro ou falso;
+     *
+     * @param trecho
+     * @return booleano
+     */
     private boolean hasTrecho(Trecho trecho) {
         Iterator iterTrechos = trechosAzul.iterator();
         while (iterTrechos.hasNext()) {
@@ -170,6 +204,14 @@ public class InterfaceImpl extends UnicastRemoteObject implements InterfaceAzul 
         return false;
     }
 
+    /**
+     * Método busca as reservas realizadas por um determinado cliente, usando
+     * seu cpf como referência. Retorna então um arraylist contendo todas suas
+     * reservas.
+     *
+     * @param cpf
+     * @return ArrayList<Reserva>
+     */
     @Override
     public ArrayList<Reserva> buscarReservas(String cpf) {
         ArrayList<Reserva> reservasEncontradas = new ArrayList<>();
@@ -186,12 +228,12 @@ public class InterfaceImpl extends UnicastRemoteObject implements InterfaceAzul 
     }
 
     /**
+     * Método realiza uma busca do trecho, cadastrado no sistema, partindo de
+     * uma origem e um destino. Retornando o trecho encontrado.
      *
      * @param origem
      * @param destino
-     * @param ida
-     * @param volta
-     * @return
+     * @return Object do tipo Trecho.
      */
     @Override
     public Trecho buscarTrecho(String origem, String destino) {
@@ -205,6 +247,16 @@ public class InterfaceImpl extends UnicastRemoteObject implements InterfaceAzul 
         }
     }
 
+    /**
+     * Método confere se um trecho nas determinadas datas ,ida e volta, foram
+     * reservados por outra pessoa ou pela mesma. Retornando verdadeiro ou
+     * falso.
+     *
+     * @param cpf
+     * @param dataIda
+     * @param dataVolta
+     * @return booleano
+     */
     public boolean hasTrechoReservado(String cpf, String dataIda, String dataVolta) {
         Iterator iterReservas = this.reservas.iterator();
         while (iterReservas.hasNext()) {
@@ -214,44 +266,23 @@ public class InterfaceImpl extends UnicastRemoteObject implements InterfaceAzul 
                         && reserva.getTrecho().getDataVolta().compareTo(dataVolta) == 0) {
                     return true;
 
-            }
-            }else if(!reserva.getCpf().equals(cpf) && reserva.getTrecho().getDataIda().compareTo(dataIda)==0
-             && reserva.getTrecho().getDataVolta().compareTo(dataVolta)==0){
+                }
+            } else if (!reserva.getCpf().equals(cpf) && reserva.getTrecho().getDataIda().compareTo(dataIda) == 0
+                    && reserva.getTrecho().getDataVolta().compareTo(dataVolta) == 0) {
                 return false;
             }
         }
         return false;
     }
 
-    public boolean hasReserva(String cpf, String nomeTrecho) {
-        Iterator iterReservas = this.reservas.iterator();
-        while (iterReservas.hasNext()) {
-            Reserva reserv = (Reserva) iterReservas.next();
-            if (reserv.getCpf().equals(cpf) && reserv.getTrecho().getNome().compareTo(nomeTrecho) == 0) {
-                return true;
-            }
-
-        }
-        return false;
-    }
-
-    @Override
-    public ArrayList<String> listarTrechos() {
-        ArrayList<String> trechos = new ArrayList<>();
-
-        this.trechosAzul.forEach((trecho) -> {
-            trechos.add(trecho.toString());
-        });
-        return trechos;
-    }
-
+    /**Método retornará todas os trechos cadastrados no sistema
+     * em um ArrayList do tipo Trecho.
+     * 
+     * @return ArrayList<Trecho>.
+     */
     @Override
     public ArrayList<Trecho> getTrechos() {
         return trechosAzul;
-    }
-
-    public Graph getCidadesCadastradas() {
-        return this.trechos;
     }
 
 }

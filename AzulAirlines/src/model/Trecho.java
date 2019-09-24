@@ -9,9 +9,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-/**
- *
- * @author Teeu Guima
+/**Classe que define as informações de um
+ * trecho a ser cadastrado no sistema!
+ * 
+ * @author Mateus Guimarães
  */
 public class Trecho implements Serializable {
 
@@ -111,6 +112,12 @@ public class Trecho implements Serializable {
         this.volta = voltas;
     }
 
+    /**Método para verificar a existência
+     * de uma data de ida.
+     * 
+     * @param ida
+     * @return booleano
+     */
     public boolean hasIda(String ida) {
         Iterator iterIdas = this.ida.iterator();
         while (iterIdas.hasNext()) {
@@ -125,7 +132,13 @@ public class Trecho implements Serializable {
     public void setIda(ArrayList<String> ida) {
         this.ida = ida;
     }
-
+    
+    /**Método para verificar a exitência 
+     * de uma data de volta.
+     * 
+     * @param volta
+     * @return booleano 
+     */
     public boolean hasVolta(String volta) {
         Iterator iterVoltas = this.volta.iterator();
         while (iterVoltas.hasNext()) {
@@ -173,18 +186,20 @@ public class Trecho implements Serializable {
         this.companhia = companhia;
     }
     
+    /**Método responsável por remover uma data
+     * de ida, cadastrada na lista.
+     * 
+     * @param ida 
+     */
     public synchronized void removerDataIda(String ida){
         this.ida.remove(ida);
-        /*
-        Iterator iterIdas = this.ida.iterator();
-        while (iterIdas.hasNext()) {
-            String data = (String) iterIdas.next();
-            if (data.compareTo(ida) == 0) {
-                    this.ida.remove(data);
-            }
-        }*/
     }
     
+    /** Método responsável por remover uma data
+     *  de volta, cadastrada na lista.
+     * 
+     * @param volta 
+     */
     public synchronized void removerDataVolta(String volta){
         this.volta.remove(volta);
     }
