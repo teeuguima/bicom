@@ -1,15 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package model;
 
 import java.io.Serializable;
 
-/**
+/**Classe que define as informações sobre 
+ * a reserva realizada por um perfil cadastrado
+ * no sistema! Tendo como informações um trecho
+ * selecionado e o cpf do cliente.
  *
- * @author Teeu Guima
+ * @author Mateus Guimarães
  */
 public class Reserva implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -36,7 +35,6 @@ public class Reserva implements Serializable {
     public void setTrecho(Trecho trecho) {
         this.trecho = trecho;
     }
-    
     
     
 }

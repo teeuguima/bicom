@@ -7,15 +7,19 @@ package model;
 
 import java.io.Serializable;
 
-
+/**
+ * Classe que define as informações de uma cidade cadastrada no sistema!
+ *
+ * @author Mateus Guimarães
+ */
 public class Cidade implements Serializable {
+
     private static final long serialVersionUID = 3L;
-    
     private String nome;
     private String aeroporto;
     private int codigoDoLocal;
 
-    public Cidade(int codigoDoLocal,String nome, String aeroporto) {
+    public Cidade(int codigoDoLocal, String nome, String aeroporto) {
         this.nome = nome;
         this.codigoDoLocal = codigoDoLocal;
         this.aeroporto = aeroporto;
@@ -28,8 +32,6 @@ public class Cidade implements Serializable {
     public void setAeroporto(String aeroporto) {
         this.aeroporto = aeroporto;
     }
-    
-    
 
     public String getNome() {
         return nome;
@@ -46,6 +48,5 @@ public class Cidade implements Serializable {
     public void setCodigoDoLocal(int codigoDoLocal) {
         this.codigoDoLocal = codigoDoLocal;
     }
- 
-    
+
 }

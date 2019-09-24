@@ -13,12 +13,19 @@ import interfaces.InterfaceGol;
 import java.rmi.NotBoundException;
 import java.util.ArrayList;
 
-/**
+/**Classe principal, inicializa o servidor da companhia, 
+ * cadastra cidades e trechos onde a mesma opera.
  *
- * @author Teeu Guima
+ * @author Mateus Guimarães
  */
 public class Servidor {
 
+    /**Método que realiza o cadastro das cidades que a companhia
+     * opera.
+     * 
+     * @param server
+     * @throws RemoteException 
+     */
     public void cadastrarCidades(InterfaceGol server) throws RemoteException {
         server.cadastrarCidade(0, "São Paulo", "Congonhas");
         server.cadastrarCidade(1, "Rio de Janeiro", "Galeão");
@@ -29,7 +36,13 @@ public class Servidor {
         server.cadastrarCidade(11, "Curitiba", "Bacacheri");
         server.cadastrarCidade(12, "Brasília", "Gilberto Freyre");
     }
-
+    
+    /**Método cadastrar os trechos entre as cidades que a companhia
+     * opera.
+     * 
+     * @param server
+     * @throws RemoteException 
+     */
     public void cadastrarTrechos(InterfaceGol server) throws RemoteException {
         ArrayList<String> datasCHFORIda = new ArrayList<>();
         ArrayList<String> datasCHFORVolta = new ArrayList<>();
