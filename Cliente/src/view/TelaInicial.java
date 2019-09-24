@@ -17,9 +17,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-/**
+/**Classe JFrame responsável por coletar do usuário 
+ * as informações para login, exibindo os campos de texto.
  *
- * @author Teeu Guima
+ * @author Mateus Guimarães
  */
 public class TelaInicial extends javax.swing.JFrame {
 
@@ -168,17 +169,28 @@ public class TelaInicial extends javax.swing.JFrame {
     private void EntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EntrarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_EntrarActionPerformed
-
+    /**Método que chama a classe JFrame responsável por
+     * fazer o cadastro. 
+     * 
+     * @param evt 
+     */
     private void realizarCadastro(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_realizarCadastro
         try {
             new TelaCadastro().setVisible(true);
-            //this.setVisible(false);
+            this.setVisible(false);
         } catch (IOException | ClassNotFoundException | NotBoundException ex) {
             Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_realizarCadastro
-
+    
+    /**Método que captura o evento de clique no
+     * botão de entrar, realizando o login caso
+     * cpf e senha estejam corretos. Após uma classe
+     * jFrame é iniciada.
+     * 
+     * @param evt 
+     */
     private void EntrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EntrarMouseClicked
 
         try {
@@ -188,7 +200,6 @@ public class TelaInicial extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Login realizado com sucesso!");
                 TelaOperacoes telaOp = new TelaOperacoes(this.facade);
                 new Thread(telaOp).start();
-                //telaOp.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Dados inválidos, tente novamente!", null, JOptionPane.ERROR_MESSAGE);
 

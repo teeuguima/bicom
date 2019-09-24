@@ -17,8 +17,10 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
+ * Classe JFrame responsável por interagir com o cliente coletando as informações
+ * necessárias para o cadastro e enviando-as para o servidor
  *
- * @author Teeu Guima
+ * @author Mateus Guimarães
  */
 public class TelaCadastro extends javax.swing.JFrame {
 
@@ -166,7 +168,12 @@ public class TelaCadastro extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Método que verifica ação de click no button Enviar, coletando os dados
+     * inseridos nos campos de texto e enviando para cadastro no servidor.
+     *
+     * @param evt
+     */
     private void enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarActionPerformed
 
         try {
@@ -174,7 +181,6 @@ public class TelaCadastro extends javax.swing.JFrame {
             if (facade.cadastrarPerfil(jTextFieldNome.getText(), jTextFieldSobrenome.getText(), jTextFieldCpf.getText(), new String(jPasswordFieldSenha.getPassword()))) {
                 JOptionPane.showMessageDialog(null, "Perfil cadastrado com sucesso! Faça o login para ter acesso ao sistema!", null, JOptionPane.INFORMATION_MESSAGE);
                 this.setVisible(false);
-                //facade.salvarDados();
                 new TelaInicial().setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Perfil já cadastrado no sistema!", null, JOptionPane.WARNING_MESSAGE);
@@ -188,14 +194,16 @@ public class TelaCadastro extends javax.swing.JFrame {
             Logger.getLogger(TelaCadastro.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_enviarActionPerformed
-
+    
+    /**Método altera a cor do painel de camadas.
+     * 
+     */
     private void changeColor() {
-        //this.jLayeredPane1.setBackground(new java.awt.Color(0, 124, 255))
-        //this.jLayeredPane3.setBackground(new java.awt.Color(255, 255, 255));
+        this.jLayeredPane1.setBackground(new java.awt.Color(0, 124, 255));
         this.jLayeredPane1.setOpaque(true);
-        
 
     }
+
     /**
      * @param args the command line arguments
      */
@@ -226,6 +234,7 @@ public class TelaCadastro extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 try {
                     TelaCadastro telaCadastro = new TelaCadastro();
@@ -238,12 +247,7 @@ public class TelaCadastro extends javax.swing.JFrame {
                 } catch (NotBoundException ex) {
                     Logger.getLogger(TelaCadastro.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-                /*try {
-                    new TelaCadastro().setVisible(true);
-                } catch (IOException | ClassNotFoundException e) {
-                }
-                 */
+               
             }
         });
     }

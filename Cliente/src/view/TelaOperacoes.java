@@ -6,29 +6,24 @@
 package view;
 
 import facade.Facade;
-import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import interfaces.InterfaceHostAirlines;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 import javax.swing.DefaultListModel;
-import javax.swing.DefaultListSelectionModel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import model.Trecho;
 
-/**
+/**Classe JFrame responsável por exibir ao cliente
+ * trechos disponíveis para compra, realizar compra
+ * e buscar trechos.
  *
- * @author Teeu Guima
+ * @author Mateus Guimarães
  */
 public class TelaOperacoes extends javax.swing.JFrame implements Runnable {
 
@@ -356,6 +351,13 @@ public class TelaOperacoes extends javax.swing.JFrame implements Runnable {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**Método que captura evento de clique no botão buscar,
+     * capturando os dados nos campos de texto
+     * e retornando nas jLists as passagens disponíveis do 
+     * trecho solicitado.
+     * 
+     * @param evt 
+     */
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         try {
             Registry registryHost = facade.getRegistry();
@@ -375,6 +377,14 @@ public class TelaOperacoes extends javax.swing.JFrame implements Runnable {
 
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
+    /**Método que captura o evento de clique no botão Reservar,
+     * coletando os itens selecionados nas jLists das companhias,
+     * desta forma, pede ao servidor que faça a reserva das passagens
+     * escolhidas. O retorno do servidor, faz com que emita um aviso 
+     * sobre o status da reserva.
+     * 
+     * @param evt 
+     */
     private void jButtonReservarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReservarActionPerformed
         if (jListAzul.getSelectedValue() != null) {
             String passagemAzul = jListAzul.getSelectedValue();
@@ -440,7 +450,11 @@ public class TelaOperacoes extends javax.swing.JFrame implements Runnable {
             Logger.getLogger(TelaOperacoes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonReservarActionPerformed
-
+    /**Método que chama a classe JFrame responsável pela exibição
+     * das passagens reservadas!
+     * 
+     * @param evt 
+     */
     private void minhasPassagensActionPerfomed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minhasPassagensActionPerfomed
         // TODO add your handling code here:
         TelaMinhasPassagens minhasPassagens;
@@ -460,17 +474,32 @@ public class TelaOperacoes extends javax.swing.JFrame implements Runnable {
 
 
     }//GEN-LAST:event_minhasPassagensActionPerfomed
+    
+    /**Método que se comunica com o servidor
+     * para solicitar a reserva do trecho requerido.
+     * 
+     * @param companhia
+     * @param origem
+     * @param destino
+     * @param ida
+     * @param volta
+     * @return booleano
+     * @throws RemoteException
+     * @throws NotBoundException 
+     */
     private boolean reservarTrechos(String companhia, String origem, String destino, String ida, String volta) throws RemoteException, NotBoundException {
-        //Registry registryHost = LocateRegistry.getRegistry("172.16.103.5",5595);
         Registry registryHost = facade.getRegistry();
         InterfaceHostAirlines serverHost = (InterfaceHostAirlines) registryHost.lookup("OperacoesHost");
 
         return serverHost.reservarTrecho(facade.getCpf(), companhia, origem, destino, ida, volta);
-        //return serverHost.reservarTrecho("01212", companhia, origem, destino, ida, volta);
-
-        //serverHost.
     }
-
+    
+    /**Método que insere os trechos disponíveis nas jLists
+     * das companhias.
+     * 
+     * @throws RemoteException
+     * @throws NotBoundException 
+     */
     private void trechosDisponiveis() throws RemoteException, NotBoundException {
         DefaultListModel listAzul = new DefaultListModel();
         DefaultListModel listGol = new DefaultListModel();
@@ -559,7 +588,8 @@ public class TelaOperacoes extends javax.swing.JFrame implements Runnable {
         }
         this.jListLatam.setModel(listLatam);
     }
-
+    
+    
     private void trechosEncontrados(ArrayList<Trecho> trechos) {
         DefaultListModel listAzul = new DefaultListModel();
         DefaultListModel listGol = new DefaultListModel();
@@ -615,10 +645,7 @@ public class TelaOperacoes extends javax.swing.JFrame implements Runnable {
         }
     }
 
-    public void atualizarPassagens() throws InterruptedException, RemoteException, NotBoundException {
-        //  Thread.sleep(80000);
-        trechosDisponiveis();
-    }
+    
 
     private void changeColor() {
         this.jLayeredPane1.setBackground(new java.awt.Color(0, 124, 255));

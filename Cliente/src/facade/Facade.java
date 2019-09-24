@@ -5,7 +5,6 @@
  */
 package facade;
 
-import controladores.ControladorDeDados;
 import interfaces.InterfaceHostAirlines;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,16 +16,16 @@ import java.rmi.registry.Registry;
 import java.security.NoSuchAlgorithmException;
 import model.Perfil;
 
-/**
+/** Classe que simplifica as chamadas dos métodos
+ * na classe principal, conectando diretamente ao servidor
+ * e solicitando operações.
  *
- * @author Teeu Guima
+ * @author Mateus Guimarães
  */
 public class Facade {
 
-    private ControladorDeDados dados;
     private Perfil perfil;
     final Registry registryHost;
-    //Registry registryHost = LocateRegistry.getRegistry("172.16.103.11",5595);
     InterfaceHostAirlines serverHost;
 
     public Facade() throws IOException, FileNotFoundException, ClassNotFoundException, RemoteException, NotBoundException {
@@ -34,41 +33,69 @@ public class Facade {
         this.serverHost = (InterfaceHostAirlines) registryHost.lookup("OperacoesHost");
 
     }
-
+    
+    /**Método que realiza o cadastro das informações
+     * de um cliente no servidor. retornando verdadeiro
+     * para cadastro efetuado ou falso para erro no cadastro.
+     * 
+     * @param nome
+     * @param sobrenome
+     * @param cpf
+     * @param senha
+     * @return booleano
+     * @throws NoSuchAlgorithmException
+     * @throws UnsupportedEncodingException
+     * @throws IOException 
+     */
     public boolean cadastrarPerfil(String nome, String sobrenome, String cpf, String senha) throws NoSuchAlgorithmException, UnsupportedEncodingException, IOException {
         return this.serverHost.cadastrarPerfil(nome, sobrenome, cpf, senha);
-        //return this.dados.cadastrarPerfil(new Perfil(nome, sobrenome,cpf, dados.cadastrarSenha(senha)));
-
     }
 
+    /**Retorna o cpf do perfil
+     * armazenado no objeto this.perfil.
+     * 
+     * @return String
+     */
     public String getCpf() {
         return this.perfil.getCpf();
     }
     
+    /**Retorna o registro do servidor.
+     * 
+     * @return Registry
+     */
     public Registry getRegistry(){
         return this.registryHost;
     }
-
+    
+    /**Método concatena o nome e o sobrenome
+     * de um cliente conectado!
+     * 
+     * 
+     * @return String
+     */
     public String getNomeCompleto() {
         return this.perfil.getNome() + " " + this.perfil.getSobrenome();
     }
 
+    /**Método que efetua login no servidor, a partir
+     * do cpf e a senha cadastrada. Retorna verdadeiro
+     * se o login foi efetuado ou falso se não foi possível
+     * realizar o mesmo.
+     * 
+     * @param cpf
+     * @param senha
+     * @return booleano
+     * @throws NoSuchAlgorithmException
+     * @throws UnsupportedEncodingException
+     * @throws IOException
+     * @throws FileNotFoundException
+     * @throws ClassNotFoundException 
+     */
     public boolean realizarLogin(String cpf, String senha) throws NoSuchAlgorithmException, UnsupportedEncodingException, IOException, FileNotFoundException, ClassNotFoundException {
         this.perfil = this.serverHost.realizarLogin(cpf, senha);
         return this.perfil != null;
     }
-    /*
-    public void salvarDados() throws IOException{
-        this.dados.salvandoDados();
-    }
     
-    public void lerDados() throws IOException, FileNotFoundException, ClassNotFoundException{
-        dados.lendoDados();
-    }
-    
-    public void criarArquivo() throws IOException, FileNotFoundException, ClassNotFoundException{
-        this.dados.criandoArquivos();
-    }
-     */
 
 }

@@ -20,9 +20,11 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import model.Reserva;
 
-/**
+/**Classe JFrame responsável por exibir ao usuário
+ * as passagens compradas por ele através do seu
+ * cpf.
  *
- * @author Teeu Guima
+ * @author Mateus Guimarães 
  */
 public class TelaMinhasPassagens extends javax.swing.JFrame implements Runnable {
 
@@ -30,7 +32,6 @@ public class TelaMinhasPassagens extends javax.swing.JFrame implements Runnable 
 
     public TelaMinhasPassagens(Facade facade) throws IOException, FileNotFoundException, ClassNotFoundException, RemoteException, NotBoundException {
         initComponents();
-        //this.facade = new Facade();
         this.facade = facade;
     }
 
@@ -200,6 +201,14 @@ public class TelaMinhasPassagens extends javax.swing.JFrame implements Runnable 
 
     }
 
+    /**Método que exibe as passagens compradas por um
+     * determinado cliente. O mesmo insere as informações
+     * nos jList de cada companhia, obtidas atráves do
+     * servidor.
+     * 
+     * @throws RemoteException
+     * @throws NotBoundException 
+     */
     public void minhasPassagens() throws RemoteException, NotBoundException {
         Registry registryHost = LocateRegistry.getRegistry("172.16.103.5",5595);
         //Registry registryHost = LocateRegistry.getRegistry("172.16.103.11",5595);
