@@ -6,7 +6,6 @@
 package servidor;
 
 import comunicacaoRMI.InterfaceImpl;
-import interfaces.InterfaceHostAirlines;
 import java.rmi.RemoteException;
 import interfaces.InterfaceLatam;
 import java.rmi.NotBoundException;
@@ -14,11 +13,20 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
-/**
+/**Classe principal, inicializa o servidor e
+ * executa os métodos responsáveis por cadastrar
+ * as cidades e trechos que a companhia opera. 
+ * 
  *
- * @author Teeu Guima
+ * @author Mateus Guimarães
  */
 public class Servidor {
+
+    /**Método que cadastra cidades no servidor da companhia.
+     * 
+     * @param server
+     * @throws RemoteException 
+     */
     public void cadastrarCidades(InterfaceLatam server) throws RemoteException {
         server.cadastrarCidade(1, "Rio de Janeiro", "Galeão");
         server.cadastrarCidade(11, "Curitiba", "Bacacheri");
@@ -27,6 +35,12 @@ public class Servidor {
         server.cadastrarCidade(63, "São José dos Campos", " Professor Urbano Ernesto Stumpf");
     }
 
+    /**Método que cadastra trechos entre as cidades no servidor
+     * da companhia.
+     * 
+     * @param server
+     * @throws RemoteException 
+     */
     public void cadastrarTrechos(InterfaceLatam server) throws RemoteException {
         ArrayList<String> datasRJCURIda = new ArrayList<>();
         ArrayList<String> datasRJCURVolta = new ArrayList<>();
@@ -52,9 +66,9 @@ public class Servidor {
         datasRJCURVolta.add("08/10/2019");
         datasRJCURVolta.add("09/10/2019");
         datasRJCURVolta.add("10/10/2019");
-        
+
         server.cadastrarTrechos("Rio de Janeiro", "Curitiba", 0, 2, "RiodeJaneiro-Curitiba", 2, datasRJCURIda, datasRJCURVolta, 40, 576.40);
-/*
+        /*
         ArrayList<String> datasRJBHIda = new ArrayList<>();
         ArrayList<String> datasRJBHVolta = new ArrayList<>();
 
@@ -132,24 +146,20 @@ public class Servidor {
         datasRJSSAVolta.add("09/10/2019");
 
         server.cadastrarTrechos("Rio de Janeiro", "Salvador", 1, 3, "RioDeJaneiro-Salvador", 90, datasRJSSAIda, datasRJSSAVolta, 40, 958.90);
-   */
-}
-    
-    
+         */
+    }
+
     public static void main(String[] args) throws RemoteException, NotBoundException {
         try {
             Servidor servidor = new Servidor();
-            
-            
-            
-            
+
             InterfaceLatam servidorLatam = new InterfaceImpl();
             Registry registry = LocateRegistry.createRegistry(5575);
             registry.rebind("LatamServices", servidorLatam);
 
             servidor.cadastrarCidades(servidorLatam);
             servidor.cadastrarTrechos(servidorLatam);
-            
+
             System.out.println("Servidor Inicializado!");
         } catch (RemoteException e) {
             System.out.println(e.toString());

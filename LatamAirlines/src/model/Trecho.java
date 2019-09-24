@@ -9,9 +9,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-/**
- *
- * @author Teeu Guima
+/**Classe que define as informações de um
+ * trecho a ser cadastrado no sistema!
+ * 
+ * @author Mateus Guimarães
  */
 public class Trecho implements Serializable {
 
@@ -22,11 +23,12 @@ public class Trecho implements Serializable {
     private String companhia;
 
     private String nome;
-    private String origem;
-    private String destino;
 
     private String dataIda;
     private String dataVolta;
+
+    private String origem;
+    private String destino;
 
     private ArrayList<String> ida;
     private ArrayList<String> volta;
@@ -52,6 +54,14 @@ public class Trecho implements Serializable {
         this.dataVolta = volta;
         this.nome = nome;
         this.preco = preco;
+    }
+
+    public String getDestino() {
+        return destino;
+    }
+
+    public void setDestino(String destino) {
+        this.destino = destino;
     }
 
     public String getNome() {
@@ -86,30 +96,58 @@ public class Trecho implements Serializable {
         this.origem = origem;
     }
 
-    public String getIda(String ida) {
+    public ArrayList<String> getDatasIdas() {
+        return this.ida;
+    }
+
+    public void setDatasIdas(ArrayList<String> idas) {
+        this.ida = idas;
+    }
+
+    public ArrayList<String> getDatasVoltas() {
+        return this.volta;
+    }
+
+    public void setDatasVoltas(ArrayList<String> voltas) {
+        this.volta = voltas;
+    }
+
+    /**Método para verificar a existência
+     * de uma data de ida.
+     * 
+     * @param ida
+     * @return booleano
+     */
+    public boolean hasIda(String ida) {
         Iterator iterIdas = this.ida.iterator();
         while (iterIdas.hasNext()) {
             String data = (String) iterIdas.next();
             if (data.compareTo(ida) == 0) {
-                return data;
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     public void setIda(ArrayList<String> ida) {
         this.ida = ida;
     }
-
-    public String getVolta(String volta) {
+    
+    /**Método para verificar a exitência 
+     * de uma data de volta.
+     * 
+     * @param volta
+     * @return booleano 
+     */
+    public boolean hasVolta(String volta) {
         Iterator iterVoltas = this.volta.iterator();
         while (iterVoltas.hasNext()) {
             String data = (String) iterVoltas.next();
             if (data.compareTo(volta) == 0) {
-                return data;
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     public void setVolta(ArrayList<String> volta) {
@@ -147,23 +185,24 @@ public class Trecho implements Serializable {
     public void setCompanhia(String companhia) {
         this.companhia = companhia;
     }
-
-    public String getDestino() {
-        return destino;
-    }
-
-    public void setDestino(String destino) {
-        this.destino = destino;
-    }
     
-    public void removerDataIda(String ida){
+    /**Método responsável por remover uma data
+     * de ida, cadastrada na lista.
+     * 
+     * @param ida 
+     */
+    public synchronized void removerDataIda(String ida){
         this.ida.remove(ida);
     }
     
-    public void removerDataVolta(String volta){
+    /** Método responsável por remover uma data
+     *  de volta, cadastrada na lista.
+     * 
+     * @param volta 
+     */
+    public synchronized void removerDataVolta(String volta){
         this.volta.remove(volta);
     }
-    
 
     @Override
     public String toString() {
