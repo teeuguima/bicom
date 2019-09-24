@@ -13,15 +13,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import model.Reserva;
 import model.Trecho;
-import java.util.Set;
-import model.Cidade;
-import model.Rota;
-
-import org.jgrapht.*;
-import org.jgrapht.graph.*;
 import interfaces.InterfaceHostAirlines;
 import interfaces.InterfaceLatam;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -29,22 +22,19 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Perfil;
 
-/**
+/**Classe responsável por tratar as solicitações dos clientes que 
+ * desejam reservar passagens aéreas nas companhias cadastradas!
  *
- * @author Teeu Guima
+ * @author Mateus Guimarães
  */
 public class InterfaceImpl extends UnicastRemoteObject implements InterfaceHostAirlines {
 
-    private ArrayList<Reserva> reservas;
-    private ArrayList<Cidade> cidades;
-    private Graph<Cidade, Rota> trechos;
-    public ArrayList<String> companhia;
 
+    private ArrayList<Reserva> reservas;
     private InterfaceGol golAirlines;
     private InterfaceAzul azulAirlines;
     private InterfaceLatam latamAirlines;
@@ -60,107 +50,22 @@ public class InterfaceImpl extends UnicastRemoteObject implements InterfaceHostA
         this.latamAirlines = latamAirlines;
 
         this.reservas = new ArrayList<>();
-        this.cidades = new ArrayList<>();
-        this.companhia = new ArrayList<>();
-        this.trechos = new Multigraph<>(Rota.class);
         this.perfis = new ArrayList<>();
 
-    }
+    }  
 
-    private boolean hasCidade(String nome) {
-        Iterator iterCidades = cidades.iterator();
-        if (iterCidades.hasNext()) {
-            Cidade cidade = (Cidade) iterCidades.next();
-            if (cidade.getNome().compareTo(nome) == 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private Cidade buscarCidade(int idLocal) {
-        Iterator iterCidades = cidades.iterator();
-        if (iterCidades.hasNext()) {
-            Cidade cidade = (Cidade) iterCidades.next();
-            if (cidade.getCodigoDoLocal() == idLocal) {
-                return cidade;
-            }
-        }
-        return null;
-    }
-
-    public void cadastrarCidade(Cidade cidade) {
-        if (buscarCidade(cidade.getNome()) == null) {
-            this.cidades.add(cidade);
-            this.trechos.addVertex(cidade);
-        }
-    }
-
-    public void adicionarCompanhia(String companhia) {
-        if (!hasCompanhia(companhia)) {
-            this.companhia.add(companhia);
-        }
-    }
-
-    public boolean hasCompanhia(String companhia) {
-        Iterator iterCompanhia = this.companhia.iterator();
-        while (iterCompanhia.hasNext()) {
-            String comp = (String) iterCompanhia.next();
-            if (comp.compareTo(companhia) == 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void cadastrarRota(String companhia, String origem, String destino, int idOrigem, int idDestino, String nomeTrecho, int tempoVoo, ArrayList<String> ida, ArrayList<String> volta, int quantidade, double preco) throws RemoteException {
-        Cidade cdorigem = buscarCidade(origem);
-        Cidade cddestino = buscarCidade(destino);
-
-        if (cdorigem != null && cddestino != null) {
-            System.out.println("Entrou");
-            System.out.println(origem + " " + destino);
-            if (this.trechos.containsVertex(cdorigem) && this.trechos.containsVertex(cddestino)) {
-                //this.rotas.addVertex(cdorigem);
-                //this.rotas.addVertex(cddestino);
-                System.out.println("Entrou Aqui!");
-                if (!this.trechos.containsEdge(cdorigem, cddestino)) {
-                    Rota rota = new Rota();
-                    rota.adicionarRota(companhia, nomeTrecho, new Trecho(companhia, origem, destino, nomeTrecho, ida, volta, preco, quantidade));
-                    this.trechos.addEdge(cdorigem, cddestino, rota);
-                } else {
-                    Rota rota = this.trechos.getEdge(cdorigem, cddestino);
-                    rota.adicionarRota(companhia, nomeTrecho, new Trecho(companhia, origem, destino, nomeTrecho, ida, volta, preco, quantidade));
-                    this.trechos.addEdge(cdorigem, cddestino, rota);
-                }
-            }
-
-        } else {
-
-        }
-
-    }
-
-    private Cidade buscarCidade(String nome) {
-        Iterator iterCidades = cidades.iterator();
-        while (iterCidades.hasNext()) {
-            Cidade cidade = (Cidade) iterCidades.next();
-            if (cidade.getNome().compareTo(nome) == 0) {
-                return cidade;
-            }
-        }
-        return null;
-    }
-
-    public void editarTrechos(String companhia, String origem, String destino, ArrayList<String> ida, ArrayList<String> volta, int quantidade, double preco) throws RemoteException {
-        if (hasCompanhia(companhia)) {
-            if (hasCidade(origem) && hasCidade(destino)) {
-                Rota rota = this.trechos.getEdge(buscarCidade(origem), buscarCidade(destino));
-                rota.alterarRota(companhia, quantidade, ida, volta, preco);
-            }
-        }
-    }
-
+    /**Método para realizar uma reserva dos trechos 
+     * escolhidos por um cliente.
+     * 
+     * @param cpf
+     * @param companhia
+     * @param origem
+     * @param destino
+     * @param ida
+     * @param volta
+     * @return
+     * @throws RemoteException 
+     */
     @Override
     public boolean reservarTrecho(String cpf, String companhia, String origem, String destino, String ida, String volta) throws RemoteException {
 
@@ -176,11 +81,20 @@ public class InterfaceImpl extends UnicastRemoteObject implements InterfaceHostA
         }
         return false;
     }
-
+    
+/**Método de busca das reservas realizadas por um cliente,
+ * retornando seu histórico de compra. 
+ * 
+ * @param companhia
+ * @param cpf
+ * @return ArrayList<Reserva>
+ * @throws RemoteException 
+ */
     @Override
     public ArrayList<Reserva> buscarReservas(String companhia, String cpf) throws RemoteException {
         if (companhia.compareTo("Azul Airlines") == 0) {
             return this.azulAirlines.buscarReservas(cpf);
+            
         } else if (companhia.compareTo("Gol Airlines") == 0) {
             return this.golAirlines.buscarReservas(cpf);
         } else if (companhia.compareTo("Latam Airlines") == 0) {
@@ -188,45 +102,77 @@ public class InterfaceImpl extends UnicastRemoteObject implements InterfaceHostA
         }
         return null;
     }
-
+    
+    /**
+     * 
+     * @param origem
+     * @param destino
+     * @return
+     * @throws RemoteException 
+     */
     @Override
     public ArrayList<Trecho> buscarTrecho(String origem, String destino) throws RemoteException {
         ArrayList<Trecho> trechosEncontrados = new ArrayList<>();
         Trecho azul = azulAirlines.buscarTrecho(origem, destino);
         if (azul != null) {
-            System.out.println("Tem objeto!");
             trechosEncontrados.add(azul);
-            System.out.println(azul.getOrigem() + azul.getDestino());
         }
         Trecho gol = golAirlines.buscarTrecho(origem, destino);
         if (gol != null) {
             trechosEncontrados.add(gol);
-            System.out.println("Tem objeto!");
         }
         Trecho latam = latamAirlines.buscarTrecho(origem, destino);
         if (latam != null) {
             trechosEncontrados.add(latam);
-            System.out.println("Tem objeto!");
         }
 
         return trechosEncontrados;
     }
 
+    /**Método que retorna os trechos disponíveis na companhia
+     * Azul Airlines
+     * 
+     * @return ArrayList<Trecho>
+     * @throws RemoteException 
+     */
     @Override
     public ArrayList<Trecho> getTrechosAzul() throws RemoteException {
         return azulAirlines.getTrechos();
     }
 
+    /**Método que retorna os trechos disponíveis na companhia
+     * Gol Airlines
+     * 
+     * @return ArrayList<Trecho>
+     * @throws RemoteException 
+     */
     @Override
     public ArrayList<Trecho> getTrechosGol() throws RemoteException {
         return golAirlines.getTrechos();
     }
 
+    /**Método que retorna os trechos disponíveis na companhia
+     * Latam Airlines
+     * 
+     * @return ArrayList<Trecho>
+     * @throws RemoteException 
+     */
     @Override
     public ArrayList<Trecho> getTrechosLatam() throws RemoteException {
         return latamAirlines.getTrechos();
     }
 
+    /**Método responsável por cadastrar os usuários 
+     * no sistema, para que se tenha o controle sobre 
+     * histórico de reservas e a solicitação de reservas.
+     * 
+     * @param nome
+     * @param sobrenome
+     * @param cpf
+     * @param senha
+     * @return boolean
+     * @throws RemoteException 
+     */
     @Override
     public boolean cadastrarPerfil(String nome, String sobrenome, String cpf, String senha) throws RemoteException {
         try {
@@ -316,8 +262,6 @@ public class InterfaceImpl extends UnicastRemoteObject implements InterfaceHostA
      * @param cpf
      * @param senha
      * @return Objeto do tipo Perfil
-     * @throws NoSuchAlgorithmException
-     * @throws UnsupportedEncodingException
      * @throws java.rmi.RemoteException
      */
     @Override

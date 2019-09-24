@@ -7,9 +7,12 @@ package model;
 
 import java.io.Serializable;
 
-/**
- *
- * @author Teeu Guima
+/**Classe que define as informações sobre 
+ * a reserva realizada por um perfil cadastrado
+ * no sistema! Tendo como informações um trecho
+ * selecionado e o cpf do cliente.
+ * 
+ * @author Mateus Guimarães
  */
 public class Reserva implements Serializable {
     private static final long serialVersionUID = 1L;

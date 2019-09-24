@@ -8,9 +8,10 @@ import java.io.Serializable;
  * and open the template in the editor.
  */
 
-/**
- *
- * @author Teeu Guima
+/**Classe que define as informações de um
+ * perfil cadastrado no sistema!
+ * 
+ * @author Mateus Guimarães
  */
 public class Perfil implements Serializable{
     private static final long serialVersionUID = -7401900171994267556L;

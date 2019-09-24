@@ -11,9 +11,10 @@ import java.util.ArrayList;
 import model.Reserva;
 import model.Trecho;
 
-/**
+/** Interface para a conexão e solicitação dos 
+ * recursos no servidor da companhia aérea.
  *
- * @author Teeu Guima
+ * @author Mateus Guimarães
  */
 public interface InterfaceGol extends Remote {
     

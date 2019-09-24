@@ -8,16 +8,15 @@ package interfaces;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import model.Cidade;
 import model.Perfil;
 import model.Reserva;
 import model.Trecho;
-import org.jgrapht.Graph;
 
-/**
+/** Interface para a classe de implementação
+ * do métodos necessários para o funcionamento
+ * do servidor.
  *
- * @author Teeu Guima
+ * @author Mateus Guimarães
  */
 public interface InterfaceHostAirlines extends Remote {
     

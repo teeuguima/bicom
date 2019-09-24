@@ -9,11 +9,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import util.Grafos;
 
-/**
- *
- * @author Teeu Guima
+/**Classe que define as informações de um
+ * trecho solicitado no sistema!
+ * 
+ * @author Mateus Guimarães
  */
 public class Trecho implements Serializable {
 
@@ -176,27 +176,6 @@ public class Trecho implements Serializable {
     public void setDataVolta(String dataVolta) {
         this.dataVolta = dataVolta;
     }
-    /*
-    public void removerDatas(String ida, String volta){
-        Iterator iterIdas = this.ida.iterator();
-        Iterator iterVoltas = this.volta.iterator();
-        
-        while(iterIdas.hasNext()){
-            String s = (String) iterIdas.next();
-            if(s.compareTo(ida)==0){
-                this.ida.remove(s);
-            }
-        }
-        
-        while(iterVoltas.hasNext()){
-            String s = (String) iterVoltas.next();
-            if(s.compareTo(volta)==0){
-                this.ida.remove(s);
-            }
-        }
-    }
-    
-    */
 
     @Override
     public String toString() {

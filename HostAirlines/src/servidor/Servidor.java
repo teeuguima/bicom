@@ -18,31 +18,14 @@ import interfaces.InterfaceHostAirlines;
 import interfaces.InterfaceLatam;
 import java.util.Iterator;
 
-/**
+/**Classe principal responsável por inicializar o
+ * servidor RMI e se conectar com os outros servidores
+ * das companhias aéreas.
  *
- * @author Teeu Guima
+ * @author Mateus Guimarães 
  */
 public class Servidor {
     
-    public void buscarTrecho(InterfaceAzul azAir, InterfaceHostAirlines host) throws RemoteException{
-        
-        Trecho t = azAir.buscarTrecho("São Paulo", "Salvador");
-        System.out.println(t.getCompanhia() + t.getPreco() + " " + t.getQuantidade());
-        
-        ArrayList<Trecho> array = host.buscarTrecho("São Paulo", "Salvador");
-        Iterator iterTre = array.iterator();
-        while(iterTre.hasNext()){
-            Trecho tr = (Trecho) iterTre.next();
-            if(tr != null){
-                System.out.println("Tem trecho!");
-                System.out.println(tr.getCompanhia());
-                System.out.println(tr.getOrigem());
-                System.out.println(tr.getDestino());
-            }
-        }
-        
-        
-    }
     public static void main(String[] args) throws RemoteException, NotBoundException {
         try {
             Servidor server = new Servidor();
@@ -61,7 +44,7 @@ public class Servidor {
 
             registry.rebind("OperacoesHost", servidor);
             
-            server.buscarTrecho(azulHost, servidor);
+            
             System.out.println("Servidor Inicializado!");
         } catch (RemoteException e) {
             e.printStackTrace();
